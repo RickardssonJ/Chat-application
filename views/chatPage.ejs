@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/styling/style.css" />
+  </head>
+  <body>
+    <div class="row no-gutters">
+      <div class="col-sm-3 no-gutters">
+        <div id="sideBar">
+          <% rooms.forEach(room => { %>
+          <h2><a href="<%= room.roomName %>"><%= room.roomName %></h2></a>
+          <% }) %>
+         
+            
+        </div>
+        <div id="createRoomDiv">
+          <p>Create a new room</p>
+          <form action="/chatpage" method="post">
+              <label for="newRoomName">Name</label>
+            <input type="text" name="newRoomName">
+            <input type="submit" value="Create new room">
+            </form>
+        </div>
+
+      </div>
+      <div class="col-sm-9 no-gutters">
+        <div id="chat-window">
+          <h1>Please select a room</h1>
+       
+        </div>
+      </div>
+    </div>
+    <!-- <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/script.js"></script> -->
+  </body>
+</html>
