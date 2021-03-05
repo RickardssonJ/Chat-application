@@ -12,7 +12,7 @@ router.get("/:room", (req, res) => {
     // console.log(room)
     res.render("room.ejs", { rooms, room: req.params.room })
   })
-
+res.end()
   //console.log(req.params.room)
   // res.render("room.ejs", { room: req.params.room, rooms: rooms })
 })
