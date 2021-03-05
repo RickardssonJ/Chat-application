@@ -7,6 +7,17 @@ const path = require("path")
 //Let express read html forms
 app.use(express.urlencoded({ extended: true }))
 
+/////////////////////TEST KOD ///////////////////
+const indexRouter = require("./routes/index")
+const chatPageRouter = require("./routes/chatPage")
+const roomsRouter = require("./routes/rooms")
+
+app.use("/", indexRouter)
+app.use("/chatPage", chatPageRouter)
+app.use("/", roomsRouter)
+
+//////////////////////////////////////////////
+
 //////////////MONGOOSE/////////////////////////
 
 const mongoose = require("mongoose")
@@ -32,66 +43,68 @@ const rooms = { JavaScript: {}, NodeJS: {}, DataBases: {} }
 
 //////////////////RUM///////////////////////////
 
-app.get("/", (req, res) => {
-  res.render("landingPage.ejs", { welcomeText: "Please login" })
-})
+// app.get("/", (req, res) => {
+//   res.render("landingPage.ejs", { welcomeText: "Please login" })
+// })
 
-app.post("/save", (req, res) => {
-  const newUser = new NewUserModel({
-    userName: req.body.userName,
-    userMail: req.body.userMail,
-    userPassword: req.body.userPassword,
-  })
-  newUser.save((err, newUser) => {
-    if (err) {
-      return console.log("error uploading user")
-    }
-    console.log("NewUser uploaded")
-    res.redirect("/")
-  })
-})
+// app.post("/save", (req, res) => {
+//   const newUser = new NewUserModel({
+//     userName: req.body.userName,
+//     userMail: req.body.userMail,
+//     userPassword: req.body.userPassword,
+//   })
+//   newUser.save((err, newUser) => {
+//     if (err) {
+//       return console.log("error uploading user")
+//     }
+//     console.log("NewUser uploaded")
+//     res.redirect("/")
+//   })
+// })
 
-app.get("/chatPage", (req, res) => {
-  //Hämtar alla rummen
-  NewRoomModel.find({}, "roomName", (error, rooms) => {
-    if (error) return handleError(error)
-    //res.redirect("/")
-    res.render("chatPage.ejs", { rooms })
-  })
-  //res.render("chatPage.ejs", { rooms: rooms })
-})
+// app.get("/chatPage", (req, res) => {
+//   //Hämtar alla rummen
+//   NewRoomModel.find({}, "roomName", (error, rooms) => {
+//     if (error) return handleError(error)
+//     //res.redirect("/")
+//     res.render("chatPage.ejs", { rooms })
+//   })
+//   //res.render("chatPage.ejs", { rooms: rooms })
+// })
 
-app.post("/chatPage", (req, res) => {
-  const newRoom = new NewRoomModel({
-    roomName: req.body.newRoomName,
-    messages: [],
-    userOnline: [],
-  })
-  newRoom.save((err) => {
-    if (err) {
-      return console.log("error creating new room")
-    }
-    res.redirect("/chatPage")
-  })
-})
+// app.post("/chatPage", (req, res) => {
+//   const newRoom = new NewRoomModel({
+//     roomName: req.body.newRoomName,
+//     messages: [],
+//     userOnline: [],
+//   })
+//   newRoom.save((err) => {
+//     if (err) {
+//       return console.log("error creating new room")
+//     }
+//     res.redirect("/chatPage")
+//   })
+// })
 
-app.get("/:room", (req, res) => {
-  NewRoomModel.find({}, "roomName", (error, rooms) => {
-    if (error) return handleError(error)
-    let room = req.params.room
-    res.render("room.ejs", { rooms, room: room })
-  })
+// app.get("/:room", (req, res) => {
+//   NewRoomModel.find({}, "roomName", (error, rooms) => {
+//     if (error) return handleError(error)
+//     let room = req.params.room
+//     res.render("room.ejs", { rooms, room: room })
+//   })
 
-  //console.log(req.params.room)
-  // res.render("room.ejs", { room: req.params.room, rooms: rooms })
-})
+//   //console.log(req.params.room)
+//   // res.render("room.ejs", { room: req.params.room, rooms: rooms })
+// })
 ////////////////CHAT////////////////////////////
 
 //Funktion som skickar chatt meddelandet vidare till clienten
 io.on("connection", (socket) => {
   //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
+
   socket.on("chat", (chatObj) => {
     //
+
     socket.join(chatObj.room)
     io.to(chatObj.room).emit("chat", chatObj)
     console.log(socket.id)

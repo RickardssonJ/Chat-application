@@ -39,5 +39,3 @@ socket.on("typing", (data, room) => {
   console.log(room)
   userTyping.innerHTML = "<p><em>" + data + " is typing a message...</em></p>"
 })
-
-console.log("roomName from the client " + room)

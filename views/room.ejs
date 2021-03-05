@@ -2,7 +2,9 @@
     <html>
     <head>
         <title><%= room %></title>
-       
+       <script>
+const room = "<%= room %>"
+       </script>
         <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -17,7 +19,7 @@
                 <div id="sideBar">
                     <% rooms.forEach(room => { %>
                         <h2><a href="<%= room.roomName %>"><%= room.roomName %></h2></a>
-                        <p>test</p>
+                         <p>test</p>
                         <% }) %>
                     </div>
                    
@@ -32,6 +34,7 @@
                 </div>
                 <div class="col-sm-9 no-gutters">
             <h1>Welcome to the <%= room %> room!</h1>
+            <button>REMOVE LATER</button>
             <div id="chat-window">
                     <ul id="messages"></ul>
                     <div id="output"></div>
@@ -54,7 +57,7 @@
         </div>
        
         <script src="/socket.io/socket.io.js"></script>
-        <script src="/public/js/script.js"></script>
+        <script  src="/public/js/script.js"></script>
 
     </body>
     </html>
