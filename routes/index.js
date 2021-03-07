@@ -5,7 +5,7 @@ const router = express.Router()
 const NewUserModel = require("../models/users")
 
 router.get("/", (req, res) => {
-  res.render("landingPage.ejs", { welcomeText: "Please login" })
+  res.render("landingPage.ejs", { welcomeText: "Create account" })
 })
 
 router.post("/save", (req, res) => {

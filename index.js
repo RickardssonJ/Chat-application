@@ -103,8 +103,25 @@ io.on("connection", (socket) => {
   //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
 
   socket.on("chat", (chatObj) => {
-    //
+    /////////////// PUSCHA MEDDELANDEN IN I DB ////////////////////
 
+    // let room = chatObj.room
+    // let newMsg = chatObj.msgInput
+    // let user = chatObj.nameInput
+    // NewRoomModel.findOneAndUpdate(
+    //   { roomName: room },
+    //   { $push: { messages: `${user}: ${newMsg}` } },
+    //   { new: true },
+    //   (error, data) => {
+    //     if (error) {
+    //       console.log("error updating collection")
+    //     } else {
+    //       console.log(data)
+    //     }
+    //   }
+    // )
+
+    ///////////////////////////////////////////////////////////////////
     socket.join(chatObj.room)
     io.to(chatObj.room).emit("chat", chatObj)
     console.log(socket.id)
