@@ -1,0 +1,38 @@
+<form action="/save" method="post">
+  <h1 class="h3 mb-3 fw-normal">Please register</h1>
+
+  <label for="userName" class="visually-hidden">Name</label>
+  <input
+    type="text"
+    id="userName"
+    class="form-control"
+    name="userName"
+    placeholder="Name"
+    required
+    autofocus
+  />
+
+  <label for="userMail" class="visually-hidden">Email address</label>
+  <input
+    type="email"
+    id="userMail"
+    class="form-control"
+    name="userMail"
+    placeholder="Email address"
+    required
+  />
+
+  <label for="userPassword" class="visually-hidden">Password</label>
+  <input
+    type="password"
+    id="userPassword"
+    class="form-control"
+    name="userPassword"
+    placeholder="Password"
+    required
+  />
+
+  <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+</form>
+
+<p><a href="/login">Login</a></p>

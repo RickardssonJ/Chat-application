@@ -6,7 +6,6 @@ const NewRoomModel = require("../models/roomsModel")
 router.use(express.urlencoded({ extended: true }))
 
 router.get("/", (req, res) => {
-  console.log("Nisse")
   //Gets all the rooms from the database
   NewRoomModel.find({}, "roomName", (error, rooms) => {
     if (error) return handleError(error)

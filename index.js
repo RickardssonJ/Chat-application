@@ -3,7 +3,24 @@ const app = express()
 const http = require("http").Server(app)
 const io = require("socket.io")(http)
 const path = require("path")
+app.set("view engine", "ejs")
 
+/////////// CRYPT Från Micke /////////////
+const session = require("express-session")
+const passport = require("passport")
+require("./confiq/passport")(passport)
+
+//Sessions
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+)
+app.use(passport.initialize())
+app.use(passport.session())
+////////////////////////////////////
 //Let express read html forms
 app.use(express.urlencoded({ extended: true }))
 
