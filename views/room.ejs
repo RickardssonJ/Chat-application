@@ -1,9 +1,10 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <title><%= room %></title>
+        <title><%= room.roomName %></title>
        <script>
-            const room = "<%= room %>"
+            const room = "<%= room.roomName %>"
+
        </script>
         <link
         rel="stylesheet"
@@ -33,13 +34,12 @@
                       </div>
                 </div>
                 <div class="col-sm-9 no-gutters">
-            <h1>Welcome to the <%= room %> room!</h1>
+            <h1>Welcome to the <%= room.roomName %> room!</h1>
             <div id="chat-window">
 
                 <!-- Försöker skriva ut alla tidigare meddelanden -->
-                <% rooms.forEach(room => { %>
-                    <p><%= room.messages %></p>
-
+                <% room.messages.forEach(message => { %>
+                     <p><%= message %></p>
                     <% }) %>
 
                     <!-- ///////////////////////// -->
