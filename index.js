@@ -5,6 +5,34 @@ const io = require("socket.io")(http)
 const path = require("path")
 app.set("view engine", "ejs")
 
+///////////////File uppladning /////////////
+
+const fileUpload = require("express-fileupload")
+
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+)
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
+// app.post("/image", async (req, res) => {
+//   let images = []
+//   try {
+//     if (req.files) {
+//       let fileUpload = req.files.fileUpload //Namnet på inputfältet profile_pic
+//       let file_name = `./uploads/${fileUpload.name}`
+//       await fileUpload.mv(file_name) //Flyttar in filen i våran mapp
+//       images.push(file_name)
+//       res.render("room", images)
+//     } else {
+//       res.end("<h1>No file uploaded</h1>")
+//     }
+//   } catch (error) {}
+// })
+///////////////////////////////////////////
+
 /////////// CRYPT Från Micke /////////////
 const session = require("express-session")
 const passport = require("passport")
@@ -31,7 +59,8 @@ const roomsRouter = require("./routes/rooms")
 
 app.use("/", indexRouter)
 app.use("/chatPage", chatPageRouter)
-app.use("/", roomsRouter)
+app.use("/rooms", roomsRouter) //Bytt tillbaka rill "/"
+//app.use("/", roomsRouter)
 
 //////////////////////////////////////////////
 

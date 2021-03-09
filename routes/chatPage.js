@@ -13,7 +13,8 @@ router.get("/", (req, res) => {
   })
 })
 
-router.post("/chatPage", (req, res) => {
+//Creating the new room
+router.post("/", (req, res) => {
   const newRoom = new NewRoomModel({
     roomName: req.body.newRoomName,
     messages: [],

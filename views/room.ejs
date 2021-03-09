@@ -20,10 +20,11 @@
                 <div id="sideBar">
                     <% rooms.forEach(room => { %>
                         <h2><a href="<%= room.roomName %>"><%= room.roomName %></h2></a>
-                         <p>test</p>
                         <% }) %>
                     </div>
-                   
+                    <div id="usersOnline">
+                        <p>Users online</p>
+                    </div>
                     <div id="createRoomDiv">
                         <p>Create a new room</p>
                         <form action="/chatpage" method="post">
@@ -32,33 +33,47 @@
                           <input type="submit" value="Create new room">
                           </form>
                       </div>
+                      
                 </div>
                 <div class="col-sm-9 no-gutters">
             <h1>Welcome to the <%= room.roomName %> room!</h1>
             <div id="chat-window">
 
-                <!-- Försöker skriva ut alla tidigare meddelanden -->
+                <!-- Skriver ut alla tidigare meddelanden -->
                 <% room.messages.forEach(message => { %>
                      <p><%= message %></p>
                     <% }) %>
+
 
                     <!-- ///////////////////////// -->
                     <ul id="messages"></ul>
                     <div id="output"></div>
                     <div id="userTyping"></div>
-                    <form class="col-sm-9" id="form" action="">
-                    <input
-                    id="nameInput"
-                    autocomplete="off"
-                    type="text"
-                    placeholder="Your name"
-                    />
-                    <input
-                    id="msgInput"
-                    autocomplete="off"
-                    placeholder="Message"
-                    /><button>Send</button>
+                    <!-- ////////SKEIV UT BILDEN////////// -->
+                   
+
+                  
+
+                <form class="col-sm-9" id="form" action="">
+                     <input
+                     id="nameInput"
+                     autocomplete="off"
+                     type="text"
+                     placeholder="Your name"
+                     />
+                     <input
+                     id="msgInput"
+                     autocomplete="off"
+                     placeholder="Message"
+                     /><button>Send</button>
                 </form>
+
+                <!-- Formulär för uppladning av filer -->
+                <form action= "/JavaScript" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileUpload" /><br />
+                    <button type="submit" value="Upload">Upload</button>
+                </form>
+                
             </div>
         </div>
         </div>
