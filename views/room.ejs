@@ -35,7 +35,14 @@
                 <div class="col-sm-9 no-gutters">
             <h1>Welcome to the <%= room %> room!</h1>
             <div id="chat-window">
-                <p>Msg</p>
+
+                <!-- Försöker skriva ut alla tidigare meddelanden -->
+                <% rooms.forEach(room => { %>
+                    <p><%= room.messages %></p>
+
+                    <% }) %>
+
+                    <!-- ///////////////////////// -->
                     <ul id="messages"></ul>
                     <div id="output"></div>
                     <div id="userTyping"></div>
