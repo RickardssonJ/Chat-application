@@ -85,14 +85,11 @@ db.once("open", function () {
 
 app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs för att vi ska kunna ha tex styling och html i separata filer
 
-//////////////////RUM///////////////////////////
-
-//const rooms = { JavaScript: {}, NodeJS: {}, DataBases: {} }
-
 ////////////////CHAT////////////////////////////
 
 //Funktion som skickar chatt meddelandet vidare till clienten
 io.on("connection", (socket) => {
+  //TODO console.log(" Nu har jag kontakt")
   //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
 
   socket.on("chat", (chatObj) => {
@@ -123,6 +120,10 @@ io.on("connection", (socket) => {
   //Server lyssnar efter typing för att se vem som skriver
   socket.on("typing", (data, room) => {
     socket.to(room).broadcast.emit("typing", data, room)
+  })
+
+  socket.on("disconnect", () => {
+    //TODO Fixa logg ut
   })
 })
 
