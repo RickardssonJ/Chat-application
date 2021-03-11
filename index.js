@@ -33,7 +33,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 // })
 ///////////////////////////////////////////
 
-/////////// CRYPT Från Micke /////////////
+/////////// CRYPT /////////////
 const session = require("express-session")
 const passport = require("passport")
 require("./confiq/passport")(passport)
@@ -52,7 +52,7 @@ app.use(passport.session())
 //Let express read html forms
 app.use(express.urlencoded({ extended: true }))
 
-/////////////////////TEST KOD ///////////////////
+///////////////// ROUTES ///////////////////
 const indexRouter = require("./routes/index")
 const chatPageRouter = require("./routes/chatPage")
 const roomsRouter = require("./routes/rooms")
@@ -60,7 +60,7 @@ const roomsRouter = require("./routes/rooms")
 app.use("/", indexRouter)
 app.use("/chatPage", chatPageRouter)
 app.use("/rooms", roomsRouter) //Bytt tillbaka rill "/"
-//app.use("/", roomsRouter)
+app.use("/", roomsRouter)
 
 //////////////////////////////////////////////
 
@@ -78,70 +78,17 @@ db.once("open", function () {
   console.log("Connected to DB")
 })
 
-const NewUserModel = require("./models/users")
-const NewRoomModel = require("./models/roomsModel")
+// const NewUserModel = require("./models/users")
+// const NewRoomModel = require("./models/roomsModel")
 
 //////////////////////////////////////////////
 
 app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs för att vi ska kunna ha tex styling och html i separata filer
 
-const rooms = { JavaScript: {}, NodeJS: {}, DataBases: {} }
-
 //////////////////RUM///////////////////////////
 
-// app.get("/", (req, res) => {
-//   res.render("landingPage.ejs", { welcomeText: "Please login" })
-// })
+//const rooms = { JavaScript: {}, NodeJS: {}, DataBases: {} }
 
-// app.post("/save", (req, res) => {
-//   const newUser = new NewUserModel({
-//     userName: req.body.userName,
-//     userMail: req.body.userMail,
-//     userPassword: req.body.userPassword,
-//   })
-//   newUser.save((err, newUser) => {
-//     if (err) {
-//       return console.log("error uploading user")
-//     }
-//     console.log("NewUser uploaded")
-//     res.redirect("/")
-//   })
-// })
-
-// app.get("/chatPage", (req, res) => {
-//   //Hämtar alla rummen
-//   NewRoomModel.find({}, "roomName", (error, rooms) => {
-//     if (error) return handleError(error)
-//     //res.redirect("/")
-//     res.render("chatPage.ejs", { rooms })
-//   })
-//   //res.render("chatPage.ejs", { rooms: rooms })
-// })
-
-// app.post("/chatPage", (req, res) => {
-//   const newRoom = new NewRoomModel({
-//     roomName: req.body.newRoomName,
-//     messages: [],
-//     userOnline: [],
-//   })
-//   newRoom.save((err) => {
-//     if (err) {
-//       return console.log("error creating new room")
-//     }
-//     res.redirect("/chatPage")
-//   })
-// })
-
-// app.get("/:room", (req, res) => {
-//   NewRoomModel.find({}, "roomName", (error, rooms) => {
-//     if (error) return handleError(error)
-//     let room = req.params.room
-//     res.render("room.ejs", { rooms, room: room })
-//   })
-
-//   //console.log(req.params.room)
-//   // res.render("room.ejs", { room: req.params.room, rooms: rooms })
-// })
 ////////////////CHAT////////////////////////////
 
 //Funktion som skickar chatt meddelandet vidare till clienten

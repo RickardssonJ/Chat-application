@@ -54,6 +54,7 @@ router.post("/save", (req, res) => {
     userName: req.body.userName,
     userMail: req.body.userMail,
     userPassword: req.body.userPassword,
+    userOnline: true,
   })
 
   //Krypterar lösenordet

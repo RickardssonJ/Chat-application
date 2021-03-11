@@ -6,6 +6,8 @@ const msgInput = document.getElementById("msgInput")
 const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 
+
+
 //-----
 const output = document.getElementById("output")
 

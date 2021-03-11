@@ -1,27 +1,42 @@
-<form action="/login" method="post">
-  <h1 class="h3 mb-3 fw-normal">Please login</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="/login" method="post">
+      <h1 class="h3 mb-3 fw-normal">Please login</h1>
 
-  <label for="userMail" class="visually-hidden">Email address</label>
-  <input
-    type="email"
-    id="userMail"
-    class="form-control"
-    name="userMail"
-    placeholder="Email address"
-    required
-  />
+      <label for="userMail" class="visually-hidden">Email address</label>
+      <input
+        type="email"
+        id="userMail"
+        class="form-control"
+        name="userMail"
+        placeholder="Email address"
+        required
+      />
 
-  <label for="userPassword" class="visually-hidden">Password</label>
-  <input
-    type="password"
-    id="userPassword"
-    class="form-control"
-    name="userPassword"
-    placeholder="Password"
-    required
-  />
+      <label for="userPassword" class="visually-hidden">Password</label>
+      <input
+        type="password"
+        id="userPassword"
+        class="form-control"
+        name="userPassword"
+        placeholder="Password"
+        required
+      />
 
-  <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-</form>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">
+        Sign in
+      </button>
+    </form>
+    <button id="signInBtn">TEST</button>
 
-<p><a href="/register">No account? Get one!</a></p>
+    <p><a href="/register">No account? Get one!</a></p>
+    <script src="/public/js/setUserOnline.js"></script>
+  </body>
+</html>
