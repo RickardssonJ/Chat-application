@@ -60,9 +60,7 @@ const roomsRouter = require("./routes/rooms")
 app.use("/", indexRouter)
 app.use("/chatPage", chatPageRouter)
 app.use("/rooms", roomsRouter) //Bytt tillbaka rill "/"
-app.use("/", roomsRouter)
-
-//////////////////////////////////////////////
+//app.use("/", roomsRouter)
 
 //////////////MONGOOSE/////////////////////////
 
@@ -93,8 +91,8 @@ io.on("connection", (socket) => {
   //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
 
   socket.on("chat", (chatObj) => {
+    
     /////////////// PUSCHA MEDDELANDEN IN I DB ////////////////////
-
     // let room = chatObj.room
     // let newMsg = chatObj.msgInput
     // let user = chatObj.nameInput

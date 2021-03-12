@@ -3,6 +3,7 @@
     <head>
         <title><%= room.roomName %></title>
        <script>
+         //NOTE eventuellt byta namn på room för att inte krocka med room som kommer ifrån rad 54 i rooms.js
             const room = "<%= room.roomName %>"
 
        </script>
@@ -51,8 +52,10 @@
                     <div id="userTyping"></div>
                     <!-- ////////SKEIV UT BILDEN////////// -->
                    
+                    <% for(let image of images) { %>
+                        <img src="<%= image %>" alt="" /></br>
 
-                  
+                        <% } %>
 
                 <form class="col-sm-9" id="form" action="">
                      <input

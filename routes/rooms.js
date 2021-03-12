@@ -4,7 +4,9 @@ const router = express.Router()
 const roomModel = require("../models/roomsModel")
 
 router.use(express.urlencoded({ extended: true }))
+
 let rooms = []
+
 //TABORT "/" FÖR ORGINAL
 router.get("/", (req, res) => {
   // console.log("/")
@@ -16,9 +18,10 @@ router.get("/", (req, res) => {
 })
 
 router.get("/:room", async (req, res) => {
+  let images = []
+
   //let rooms = []
   let room = {}
-
   await roomModel.find({}, (error, data) => {
     if (error) return handleError(error)
     rooms = data
@@ -29,29 +32,31 @@ router.get("/:room", async (req, res) => {
     room = data
   })
 
-  res.render("room.ejs", { rooms, room })
+  res.render("room.ejs", { images, rooms, room })
 })
 
-//BILD UPPLADDNING
+// NOTE BILD UPPLADDNING
 router.post("/:room", async (req, res) => {
-  let room = req.params.room
+  //let room = req.params.room
+  // let images = []
+  // console.log(images, "images")
+  let room = {}
 
-  // let room = {}
+  await roomModel.findOne({ roomName: req.params.room }, (error, data) => {
+    if (error) return handleError(error)
+    room = data
+  })
 
-  // await roomModel.findOne({ roomName: req.params.room }, (error, data) => {
-  //   if (error) return handleError(error)
-  //   room = data
-  // })
-
-  let images = []
   try {
     if (req.files) {
       let fileUpload = req.files.fileUpload //Namnet på inputfältet
-      let file_name = `./uploads/${fileUpload.name}`
-      await fileUpload.mv(file_name) //Flyttar in filen i våran mapp
-      images.push(file_name)
+      let file_name = `/uploads/${fileUpload.name}`
 
-      res.render("room.ejs", { images, room, rooms })
+      await fileUpload.mv("." + file_name) //Flyttar in filen i våran mapp
+
+      //images.push(file_name)
+
+      res.render("room", { images: [file_name], rooms, room })
     } else {
       res.end("<h1>No file uploaded</h1>")
     }
