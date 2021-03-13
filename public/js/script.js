@@ -6,6 +6,29 @@ const msgInput = document.getElementById("msgInput")
 const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 
+let time = function () {
+  var str = ""
+
+  var currentTime = new Date()
+  var hours = currentTime.getHours()
+  var minutes = currentTime.getMinutes()
+  var seconds = currentTime.getSeconds()
+
+  if (minutes < 10) {
+    minutes = "0" + minutes
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds
+  }
+  str += hours + ":" + minutes + ":" + seconds + " "
+  if (hours > 11) {
+    str += "PM"
+  } else {
+    str += "AM"
+  }
+  return str
+}
+
 //-----
 const output = document.getElementById("output")
 
@@ -31,7 +54,13 @@ msgInput.addEventListener("keypress", () => {
 socket.on("chat", (data) => {
   userTyping.innerHTML = ""
   output.innerHTML +=
-    "<p><strong>" + data.nameInput + ": </strong>" + data.msgInput + "</p>"
+    "<p><strong>" +
+    data.nameInput +
+    " " +
+    time() +
+    " :</br> </strong>" +
+    data.msgInput +
+    "</p>"
   //window.scrollTo(0, document.body.scrollHeight)
 })
 

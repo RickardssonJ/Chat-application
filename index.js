@@ -74,10 +74,6 @@ app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs fö
 
 //Funktion som skickar chatt meddelandet vidare till clienten
 io.on("connection", (socket) => {
-  //TODO
-  console.log(" Nu har jag kontakt")
-  //socket.join(room)
-
   //Gör så att användaren direkt connectar till rummet man går in i, istället för som tidigare efter att man hade tryckt  på skicka
   socket.on("room", (room) => {
     socket.join(room)
