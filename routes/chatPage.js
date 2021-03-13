@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
       return user.userOnline == true
     })
   })
-  console.log(usersOnline)
+  //console.log(usersOnline)
 
   //Gets all the rooms from the database
   await NewRoomModel.find({}, "roomName", (error, data) => {

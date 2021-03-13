@@ -6,8 +6,6 @@ const msgInput = document.getElementById("msgInput")
 const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 
-
-
 //-----
 const output = document.getElementById("output")
 
@@ -21,6 +19,7 @@ form.addEventListener("submit", (e) => {
   })
 
   msgInput.value = ""
+  msgInput.focus()
 })
 
 //För att se att användaren skriver.
@@ -29,7 +28,7 @@ msgInput.addEventListener("keypress", () => {
 })
 
 //Clienten lyssnar efter ett chat event ifrån servern
-socket.on("chat", function (data) {
+socket.on("chat", (data) => {
   userTyping.innerHTML = ""
   output.innerHTML +=
     "<p><strong>" + data.nameInput + ": </strong>" + data.msgInput + "</p>"
@@ -40,3 +39,6 @@ socket.on("chat", function (data) {
 socket.on("typing", (data, room) => {
   userTyping.innerHTML = "<p><em>" + data + " is typing a message...</em></p>"
 })
+//////////
+//Skickar rummet som användaren ansluter till, tillbaka till servern
+socket.emit("room", room)

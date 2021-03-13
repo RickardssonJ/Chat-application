@@ -12,25 +12,12 @@ const fileUpload = require("express-fileupload")
 app.use(
   fileUpload({
     createParentPath: true,
+    safeFileNames: true, // to get rid of unwanted characters
   })
 )
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
-// app.post("/image", async (req, res) => {
-//   let images = []
-//   try {
-//     if (req.files) {
-//       let fileUpload = req.files.fileUpload //Namnet på inputfältet profile_pic
-//       let file_name = `./uploads/${fileUpload.name}`
-//       await fileUpload.mv(file_name) //Flyttar in filen i våran mapp
-//       images.push(file_name)
-//       res.render("room", images)
-//     } else {
-//       res.end("<h1>No file uploaded</h1>")
-//     }
-//   } catch (error) {}
-// })
 ///////////////////////////////////////////
 
 /////////// CRYPT /////////////
@@ -87,11 +74,18 @@ app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs fö
 
 //Funktion som skickar chatt meddelandet vidare till clienten
 io.on("connection", (socket) => {
-  //TODO console.log(" Nu har jag kontakt")
+  //TODO
+  console.log(" Nu har jag kontakt")
+  //socket.join(room)
+
+  //Gör så att användaren direkt connectar till rummet man går in i, istället för som tidigare efter att man hade tryckt  på skicka
+  socket.on("room", (room) => {
+    socket.join(room)
+  })
+
   //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
 
   socket.on("chat", (chatObj) => {
-    
     /////////////// PUSCHA MEDDELANDEN IN I DB ////////////////////
     // let room = chatObj.room
     // let newMsg = chatObj.msgInput
@@ -110,9 +104,9 @@ io.on("connection", (socket) => {
     // )
 
     ///////////////////////////////////////////////////////////////////
-    socket.join(chatObj.room)
+    //socket.join(chatObj.room)
+
     io.to(chatObj.room).emit("chat", chatObj)
-    console.log(socket.id)
   })
 
   //Server lyssnar efter typing för att se vem som skriver

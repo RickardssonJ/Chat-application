@@ -35,7 +35,7 @@ router.get("/:room", async (req, res) => {
   res.render("room.ejs", { images, rooms, room })
 })
 
-// NOTE BILD UPPLADDNING
+// NOTE BILD UPPLADDNING // Fixa så att det går att se alla bilder som skickas och inte bara den senaste
 router.post("/:room", async (req, res) => {
   //let room = req.params.room
   // let images = []
@@ -53,8 +53,6 @@ router.post("/:room", async (req, res) => {
       let file_name = `/uploads/${fileUpload.name}`
 
       await fileUpload.mv("." + file_name) //Flyttar in filen i våran mapp
-
-      //images.push(file_name)
 
       res.render("room", { images: [file_name], rooms, room })
     } else {
