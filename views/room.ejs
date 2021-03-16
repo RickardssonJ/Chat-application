@@ -21,7 +21,7 @@
                 <div id="sideBar">
                     <!-- SKRIVER UT ALLA RUMMEN -->
                     <% rooms.forEach(room => { %>
-                        <h2><a href="<%= room.roomName %>"><%= room.roomName %></h2></a>
+                        <h2><a href="<%= room._id %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
                     <!-- ONLINE USERS -->
@@ -64,7 +64,7 @@
                     <div id="output"></div>
                     <div id="userTyping"></div>
                     
-
+<!-- //NOTE När nästa person loggar in så får alla det inloggade namnet -->
                 <form class="col-sm-9" id="form" >
                     <input
                     id="nameInput"

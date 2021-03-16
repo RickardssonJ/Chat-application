@@ -6,7 +6,12 @@ const userModel = require("../models/users")
 
 router.use(express.urlencoded({ extended: true }))
 
+function handleError(error) {
+  console.log(error)
+}
+
 ///////HÄmtar alla Users som är online//////////
+//NOTE Byt namn på userOnlineTest
 let usersOnline
 let usersOnlineTest = async function () {
   await userModel.find({}, (error, users) => {
@@ -35,6 +40,8 @@ router.get("/", (req, res) => {
 router.get("/:room", async (req, res) => {
   let images = []
   let room = {}
+  let searchTerm = `ObjectId("${req.params.room}")`
+  console.log("SEARCHTERM", searchTerm)
 
   //let usersOnline
 
@@ -44,10 +51,10 @@ router.get("/:room", async (req, res) => {
     rooms = data
   })
 
-  await roomModel.findOne({ roomName: req.params.room }, (error, data) => {
+  await roomModel.findOne({ _id: req.params.room }, (error, data) => {
     if (error) return handleError(error)
     room = data
-    console.log(room)
+    console.log("RUMMET", room)
   })
 
   res.render("room.ejs", {

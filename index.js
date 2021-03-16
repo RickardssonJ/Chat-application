@@ -126,20 +126,29 @@ io.on("connection", (socket) => {
     let theSenderDoc = await userModel.findOne({ userName: sendersName })
     let senderID = theSenderDoc._id
 
-    const newPrivateRoom = new roomModel({
-      roomName: "private",
-      messages: [],
-      private: true,
-      usersOnline: [reciverID, senderID],
+    //Check to see if a privateroom already exists
+    const privateRoom = await roomModel.findOne({
+      usersOnline: { $all: [senderID, reciverID] },
     })
-    await newPrivateRoom.save((err) => {
-      if (err) {
-        console.log("No private room was created")
-      }
-    })
-    let url = newPrivateRoom.roomName
-    console.log("SOCKET", socket.id)
-    io.to(socket.id).emit("privateRoom", url)
+    //If it dosent. Creates a new room with the two users inside it
+    if (!privateRoom) {
+      const newPrivateRoom = new roomModel({
+        roomName: `${sendersName}-${reciverName}`,
+        messages: [],
+        private: true,
+        usersOnline: [reciverID, senderID],
+      })
+      await newPrivateRoom.save((err) => {
+        if (err) {
+          console.log("No private room was created")
+        }
+      })
+      const url = newPrivateRoom._id
+      io.to(socket.id).emit("privateRoom", url)
+    } else {
+      const url = privateRoom._id
+      io.to(socket.id).emit("privateRoom", url)
+    }
   })
 
   socket.on("disconnect", () => {
