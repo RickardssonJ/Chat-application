@@ -6,11 +6,11 @@ const passport_function = function (passport) {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "userMail",
+        usernameField: "userName",
         passwordField: "userPassword",
       },
       function (username, password, done) {
-        User.findOne({ userMail: username }, function (error, user) {
+        User.findOne({ userName: username }, function (error, user) {
           if (error) {
             return done(error)
           }

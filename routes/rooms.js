@@ -2,8 +2,23 @@ const express = require("express")
 const router = express.Router()
 
 const roomModel = require("../models/roomsModel")
+const userModel = require("../models/users")
 
 router.use(express.urlencoded({ extended: true }))
+
+///////HÄmtar alla Users som är online//////////
+let usersOnline
+let usersOnlineTest = async function () {
+  await userModel.find({}, (error, users) => {
+    if (error) return handleError(error)
+
+    usersOnline = users.filter((user) => {
+      return user.userOnline == true
+    })
+  })
+}
+usersOnlineTest()
+/////////////////////
 
 let rooms = []
 
@@ -19,10 +34,12 @@ router.get("/", (req, res) => {
 
 router.get("/:room", async (req, res) => {
   let images = []
+  let room = {}
+
+  //let usersOnline
 
   //let rooms = []
-  let room = {}
-  await roomModel.find({}, (error, data) => {
+  await roomModel.find({ private: false }, (error, data) => {
     if (error) return handleError(error)
     rooms = data
   })
@@ -30,9 +47,16 @@ router.get("/:room", async (req, res) => {
   await roomModel.findOne({ roomName: req.params.room }, (error, data) => {
     if (error) return handleError(error)
     room = data
+    console.log(room)
   })
 
-  res.render("room.ejs", { images, rooms, room })
+  res.render("room.ejs", {
+    images,
+    rooms,
+    room,
+    usersOnline,
+    logedInUser: req.user.userName,
+  })
 })
 
 // NOTE BILD UPPLADDNING // Fixa så att det går att se alla bilder som skickas och inte bara den senaste
@@ -54,7 +78,7 @@ router.post("/:room", async (req, res) => {
 
       await fileUpload.mv("." + file_name) //Flyttar in filen i våran mapp
 
-      res.render("room", { images: [file_name], rooms, room })
+      res.render("room", { images: [file_name], rooms, room, usersOnline })
     } else {
       res.end("<h1>No file uploaded</h1>")
     }

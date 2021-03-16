@@ -4,7 +4,7 @@
         <title><%= room.roomName %></title>
        <script>
          //NOTE eventuellt byta namn på room för att inte krocka med room som kommer ifrån rad 54 i rooms.js
-            const room = "<%= room.roomName %>"
+         const room = "<%= room.roomName %>" //Verkar inte behövas längre
 
        </script>
         <link
@@ -19,13 +19,18 @@
         <div class="row no-gutters">
             <div class="col-sm-3 no-gutters">
                 <div id="sideBar">
+                    <!-- SKRIVER UT ALLA RUMMEN -->
                     <% rooms.forEach(room => { %>
                         <h2><a href="<%= room.roomName %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
-                    <div id="usersOnline">
-                        <p>Users online</p>
-                    </div>
+                    <!-- ONLINE USERS -->
+                    <div id="onlineUsers"><h6>Online users:</h6>
+                        <% usersOnline.forEach(user => { %>
+                            <p class="users"><%= user.userName %></p>
+                       <% }) %>
+                        </div>
+
                     <div id="createRoomDiv">
                         <p>Create a new room</p>
                         <form action="/chatpage" method="post">
@@ -60,27 +65,28 @@
                     <div id="userTyping"></div>
                     
 
-                <form class="col-sm-9" id="form" action="">
-                     <input
-                     id="nameInput"
-                     autocomplete="off"
-                     type="text"
-                     placeholder="Your name"
-                     />
-                     <input
-                     id="msgInput"
-                     autocomplete="off"
-                     placeholder="Message"
-                     /><button>Send</button>
-                </form>
-
-                <!-- Formulär för uppladning av filer -->
-                <form action="/rooms/<%= room.roomName %>" method="post" enctype="multipart/form-data">
-                    <input type="file" name="fileUpload" /><br />
-                    <button type="submit" value="Upload">Upload</button>
+                <form class="col-sm-9" id="form" >
+                    <input
+                    id="nameInput"
+                    autocomplete="off"
+                    type="text"
+                    value="<%= logedInUser %>" 
+                    hidden
+                    />
+                    <input
+                    id="msgInput"
+                    autocomplete="off"
+                    placeholder="Message"
+                    />
+                    <button>Send</button>
                 </form>
                 
             </div>
+             <!-- Formulär för uppladning av filer -->
+             <form action="/rooms/<%= room.roomName %>" method="post" enctype="multipart/form-data">
+                <input type="file" name="fileUpload" /><br />
+                <button type="submit" value="Upload">Upload</button>
+            </form>
         </div>
         </div>
        

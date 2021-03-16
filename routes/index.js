@@ -9,17 +9,17 @@ const passport = require("passport")
 const NewUserModel = require("../models/users")
 
 router.get("/", (req, res) => {
-  res.render("landingPage.ejs", { welcomeText: "Create account" })
+  res.render("landingPage", { welcomeText: "Create account" })
 })
 
 //////////////////// KOD FRÅN MICKE ////////////////////
 
 router.get("/register", (req, res) => {
-  res.render("register.ejs")
+  res.render("register")
 })
 
 router.get("/login", (req, res) => {
-  res.render("login.ejs")
+  res.render("login")
 })
 
 router.post("/login", (req, res, next) => {

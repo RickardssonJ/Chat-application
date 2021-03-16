@@ -5,6 +5,10 @@ const io = require("socket.io")(http)
 const path = require("path")
 app.set("view engine", "ejs")
 
+//let onlineArray = require("./public/js/setUserOnline")
+
+// console.log("HELLLLLLOOOO")
+
 ///////////////File uppladning /////////////
 
 const fileUpload = require("express-fileupload")
@@ -47,7 +51,6 @@ const roomsRouter = require("./routes/rooms")
 app.use("/", indexRouter)
 app.use("/chatPage", chatPageRouter)
 app.use("/rooms", roomsRouter) //Bytt tillbaka rill "/"
-//app.use("/", roomsRouter)
 
 //////////////MONGOOSE/////////////////////////
 
@@ -63,8 +66,8 @@ db.once("open", function () {
   console.log("Connected to DB")
 })
 
-// const NewUserModel = require("./models/users")
-// const NewRoomModel = require("./models/roomsModel")
+const userModel = require("./models/users")
+const roomModel = require("./models/roomsModel")
 
 //////////////////////////////////////////////
 
@@ -73,6 +76,7 @@ app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs fö
 ////////////////CHAT////////////////////////////
 
 //Funktion som skickar chatt meddelandet vidare till clienten
+
 io.on("connection", (socket) => {
   //Gör så att användaren direkt connectar till rummet man går in i, istället för som tidigare efter att man hade tryckt  på skicka
   socket.on("room", (room) => {
@@ -108,6 +112,34 @@ io.on("connection", (socket) => {
   //Server lyssnar efter typing för att se vem som skriver
   socket.on("typing", (data, room) => {
     socket.to(room).broadcast.emit("typing", data, room)
+  })
+
+  socket.on("startPM", async (data) => {
+    const reciverName = data.reciverName //Innehåller namnet man klickade på
+    const sendersName = data.sendersName
+    console.log(sendersName)
+    console.log(reciverName)
+
+    let theReciverDoc = await userModel.findOne({ userName: reciverName })
+    let reciverID = theReciverDoc._id
+
+    let theSenderDoc = await userModel.findOne({ userName: sendersName })
+    let senderID = theSenderDoc._id
+
+    const newPrivateRoom = new roomModel({
+      roomName: "private",
+      messages: [],
+      private: true,
+      usersOnline: [reciverID, senderID],
+    })
+    await newPrivateRoom.save((err) => {
+      if (err) {
+        console.log("No private room was created")
+      }
+    })
+    let url = newPrivateRoom.roomName
+    console.log("SOCKET", socket.id)
+    io.to(socket.id).emit("privateRoom", url)
   })
 
   socket.on("disconnect", () => {

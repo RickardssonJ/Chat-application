@@ -10,13 +10,13 @@
     <form action="/login" method="post">
       <h1 class="h3 mb-3 fw-normal">Please login</h1>
 
-      <label for="userMail" class="visually-hidden">Email address</label>
+      <label for="userName" class="visually-hidden">Name</label>
       <input
-        type="email"
-        id="userMail"
+        type="text"
+        id="userNameInput"
         class="form-control"
-        name="userMail"
-        placeholder="Email address"
+        name="userName"
+        placeholder="name"
         required
       />
 
@@ -30,13 +30,12 @@
         required
       />
 
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
+      <button class="w-100 btn btn-lg btn-primary" type="submit" id="signInBtn">
         Sign in
       </button>
     </form>
-    <button id="signInBtn">TEST</button>
 
     <p><a href="/register">No account? Get one!</a></p>
-    <script src="/public/js/setUserOnline.js"></script>
+    <script src="/public/js/script.js"></script>
   </body>
 </html>

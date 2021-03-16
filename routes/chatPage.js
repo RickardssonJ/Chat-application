@@ -9,6 +9,7 @@ router.use(express.urlencoded({ extended: true }))
 router.get("/", async (req, res) => {
   let rooms = {}
   let usersOnline
+
   //Get all online users that are online
   await userModel.find({}, (error, users) => {
     if (error) return handleError(error)
@@ -17,14 +18,21 @@ router.get("/", async (req, res) => {
       return user.userOnline == true
     })
   })
+
+  // await userOnline.forEach((user) => {
+  //   user.addEventListener("click", (e) => {
+  //     console.log(e.target)
+  //   })
+  // })
   //console.log(usersOnline)
 
   //Gets all the rooms from the database
-  await NewRoomModel.find({}, "roomName", (error, data) => {
+  //NOTE orginal koden await NewRoomModel.find({}, "roomName", (error, data) =>
+  await NewRoomModel.find({ private: false }, (error, data) => {
     if (error) return handleError(error)
     rooms = data
   })
-  res.render("chatPage.ejs", { rooms, usersOnline })
+  res.render("chatPage", { rooms, usersOnline })
 })
 
 //Creating the new room
@@ -32,6 +40,7 @@ router.post("/", (req, res) => {
   const newRoom = new NewRoomModel({
     roomName: req.body.newRoomName,
     messages: [],
+    private: false,
     userOnline: [],
   })
   newRoom.save((err) => {
