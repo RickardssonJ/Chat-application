@@ -5,11 +5,7 @@ const io = require("socket.io")(http)
 const path = require("path")
 app.set("view engine", "ejs")
 
-//let onlineArray = require("./public/js/setUserOnline")
-
-// console.log("HELLLLLLOOOO")
-
-///////////////File uppladning /////////////
+///////////////FILE UPLOADING /////////////
 
 const fileUpload = require("express-fileupload")
 
@@ -19,17 +15,16 @@ app.use(
     safeFileNames: true, // to get rid of unwanted characters
   })
 )
-
+///////////// MIDDLEWARES ///////////////
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
-
-///////////////////////////////////////////
+app.use("/public", express.static(path.join(__dirname, "public")))
+app.use(express.urlencoded({ extended: true }))
 
 /////////// CRYPT /////////////
 const session = require("express-session")
 const passport = require("passport")
 require("./confiq/passport")(passport)
 
-//Sessions
 app.use(
   session({
     secret: "secret",
@@ -39,9 +34,6 @@ app.use(
 )
 app.use(passport.initialize())
 app.use(passport.session())
-////////////////////////////////////
-//Let express read html forms
-app.use(express.urlencoded({ extended: true }))
 
 ///////////////// ROUTES ///////////////////
 const indexRouter = require("./routes/index")
@@ -50,12 +42,11 @@ const roomsRouter = require("./routes/rooms")
 
 app.use("/", indexRouter)
 app.use("/chatPage", chatPageRouter)
-app.use("/rooms", roomsRouter) //Bytt tillbaka rill "/"
+app.use("/rooms", roomsRouter)
 
 //////////////MONGOOSE/////////////////////////
-
 const mongoose = require("mongoose")
-//const connection = stod på raden under tidigare
+
 mongoose.connect("mongodb://localhost:27017/slackClone", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -66,24 +57,24 @@ db.once("open", function () {
   console.log("Connected to DB")
 })
 
+///////////// MODELS //////////////////
 const userModel = require("./models/users")
 const roomModel = require("./models/roomsModel")
 
-//////////////////////////////////////////////
-
-app.use("/public", express.static(path.join(__dirname, "public"))) //Behövs för att vi ska kunna ha tex styling och html i separata filer
-
 ////////////////CHAT////////////////////////////
-
-//Funktion som skickar chatt meddelandet vidare till clienten
-
+let users = []
 io.on("connection", (socket) => {
-  //Gör så att användaren direkt connectar till rummet man går in i, istället för som tidigare efter att man hade tryckt  på skicka
-  socket.on("room", (room) => {
-    socket.join(room)
-  })
+  //Lets the user connect rightaway to the room
+  socket.on("join", (data) => {
+    socket.join(data.room)
 
-  //Servern lyssnar efter chat eventet och skickar rillbaka chatObj till clienten
+    const id = socket.id
+    const name = data.name
+    const user = { id, name }
+    users.push(user)
+
+    console.log(users)
+  })
 
   socket.on("chat", (chatObj) => {
     /////////////// PUSCHA MEDDELANDEN IN I DB ////////////////////
@@ -109,16 +100,18 @@ io.on("connection", (socket) => {
     io.to(chatObj.room).emit("chat", chatObj)
   })
 
-  //Server lyssnar efter typing för att se vem som skriver
   socket.on("typing", (data, room) => {
     socket.to(room).broadcast.emit("typing", data, room)
   })
-
+  /////////////////// PRIVATE CHAT //////////////////
   socket.on("startPM", async (data) => {
-    const reciverName = data.reciverName //Innehåller namnet man klickade på
+    const reciverName = data.reciverName
     const sendersName = data.sendersName
-    console.log(sendersName)
-    console.log(reciverName)
+
+    //To get the socket id for the reciver of the PM iam filtering the users array
+    let socketId_receiver = users.filter((value) => {
+      return value.name === data.reciverName
+    })
 
     let theReciverDoc = await userModel.findOne({ userName: reciverName })
     let reciverID = theReciverDoc._id
@@ -149,9 +142,14 @@ io.on("connection", (socket) => {
       const url = privateRoom._id
       io.to(socket.id).emit("privateRoom", url)
     }
+    //By using the -1 iam allways getting the latest id from the users array
+    io.to(socketId_receiver[socketId_receiver.length - 1].id).emit(
+      "alert",
+      `You have a PM from ${sendersName} click on the person to open it`
+    )
   })
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (data) => {
     //TODO Fixa logg ut
   })
 })

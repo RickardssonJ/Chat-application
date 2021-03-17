@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-
 const roomModel = require("../models/roomsModel")
 const userModel = require("../models/users")
 
@@ -12,22 +11,21 @@ function handleError(error) {
 
 ///////HÄmtar alla Users som är online//////////
 //NOTE Byt namn på userOnlineTest
-let usersOnline
-let usersOnlineTest = async function () {
-  await userModel.find({}, (error, users) => {
-    if (error) return handleError(error)
+// let usersOnline
+// let getOnlineUsers = async function () {
+//   await userModel.find({}, (error, users) => {
+//     if (error) return handleError(error)
 
-    usersOnline = users.filter((user) => {
-      return user.userOnline == true
-    })
-  })
-}
-usersOnlineTest()
+//     usersOnline = users.filter((user) => {
+//       return user.userOnline == true
+//     })
+//   })
+// }
+// getOnlineUsers()
 /////////////////////
 
 let rooms = []
 
-//TABORT "/" FÖR ORGINAL
 router.get("/", (req, res) => {
   // console.log("/")
   // roomModel.find({}, "roomName", (error, rooms) => {
@@ -40,10 +38,36 @@ router.get("/", (req, res) => {
 router.get("/:room", async (req, res) => {
   let images = []
   let room = {}
-  let searchTerm = `ObjectId("${req.params.room}")`
-  console.log("SEARCHTERM", searchTerm)
+  //NOTE Ändra så att bara offline users syns
+  // let allUsersInDb
+  // await userModel.find({}, (error, users) => {
+  //   if (error) {
+  //     console.log("Could not get users from rooms.js")
+  //   } else {
+  //     allUsersInDb = users
+  //   }
+  // })
 
-  //let usersOnline
+  let getOfflineUsers = async function () {
+    await userModel.find({}, (error, users) => {
+      if (error) return handleError(error)
+
+      usersOffline = users.filter((user) => {
+        return user.userOnline == false
+      })
+    })
+  }
+  getOfflineUsers()
+  let getOnlineUsers = async function () {
+    await userModel.find({}, (error, users) => {
+      if (error) return handleError(error)
+
+      usersOnline = users.filter((user) => {
+        return user.userOnline == true
+      })
+    })
+  }
+  getOnlineUsers()
 
   //let rooms = []
   await roomModel.find({ private: false }, (error, data) => {
@@ -54,15 +78,15 @@ router.get("/:room", async (req, res) => {
   await roomModel.findOne({ _id: req.params.room }, (error, data) => {
     if (error) return handleError(error)
     room = data
-    console.log("RUMMET", room)
   })
 
-  res.render("room.ejs", {
+  res.render("room", {
     images,
     rooms,
     room,
     usersOnline,
     logedInUser: req.user.userName,
+    usersOffline,
   })
 })
 
@@ -72,6 +96,7 @@ router.post("/:room", async (req, res) => {
   // let images = []
   // console.log(images, "images")
   let room = {}
+  let logedInUser = req.user.userName
 
   await roomModel.findOne({ roomName: req.params.room }, (error, data) => {
     if (error) return handleError(error)
@@ -85,7 +110,13 @@ router.post("/:room", async (req, res) => {
 
       await fileUpload.mv("." + file_name) //Flyttar in filen i våran mapp
 
-      res.render("room", { images: [file_name], rooms, room, usersOnline })
+      res.render("room", {
+        images: [file_name],
+        rooms,
+        room,
+        usersOnline,
+        logedInUser,
+      })
     } else {
       res.end("<h1>No file uploaded</h1>")
     }

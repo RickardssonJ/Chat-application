@@ -3,7 +3,7 @@ const socket = io()
 const messages = document.getElementById("messages")
 const form = document.getElementById("form")
 const msgInput = document.getElementById("msgInput")
-const nameInput = document.getElementById("nameInput") //NOTE Behövs inte
+const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 const users = document.getElementsByClassName("users")
 const output = document.getElementById("output")
@@ -31,32 +31,9 @@ let timeStamp = function () {
   return str
 }
 
-// for (user of users) {
-//   user.addEventListener("click", (e) => {
-//     socket.emit("startPM", e.target.textContent, socket.id)
-//     let senderName = nameInput.value
-//     console.log(senderName)
-//   })
-// }
-
-for (user of users) {
-  user.addEventListener("click", (e) => {
-    socket.emit("startPM", {
-      reciverName: e.target.textContent,
-      sendersName: nameInput.value,
-      socketID: socket.id,
-    })
-  })
-}
-
-socket.on("privateRoom", (url) => {
-  window.location.href = `/rooms/${url}`
-})
-//-----
-
 form.addEventListener("submit", (e) => {
   e.preventDefault()
-  //Clienten skickar ett chat event till servern som kommer att lyssna efter det
+
   socket.emit("chat", {
     msgInput: msgInput.value,
     nameInput: nameInput.value,
@@ -67,12 +44,10 @@ form.addEventListener("submit", (e) => {
   msgInput.focus()
 })
 
-//För att se att användaren skriver.
 msgInput.addEventListener("keypress", () => {
   socket.emit("typing", nameInput.value, room)
 })
 
-//Clienten lyssnar efter ett chat event ifrån servern
 socket.on("chat", (data) => {
   userTyping.innerHTML = ""
   output.innerHTML +=
@@ -86,10 +61,34 @@ socket.on("chat", (data) => {
   //window.scrollTo(0, document.body.scrollHeight)
 })
 
-//Lyssnar på typing eventet ifrån servern
 socket.on("typing", (data, room) => {
   userTyping.innerHTML = "<p><em>" + data + " is typing a message...</em></p>"
 })
 
+for (user of users) {
+  user.addEventListener("click", (e) => {
+    socket.emit("startPM", {
+      reciverName: e.target.textContent,
+      sendersName: nameInput.value,
+      socketID: socket.id,
+    })
+  })
+}
+//Redirects the user that started the private room to that room
+socket.on("privateRoom", (url) => {
+  window.location.href = `/rooms/${url}`
+})
+
+socket.on("alert", (msg) => {
+  alert(msg)
+})
+
 //Skickar rummet som användaren ansluter till, tillbaka till servern
-socket.emit("room", room)
+//NOTE name och socketID behövs inte.
+socket.emit("join", {
+  room: room,
+  name: nameInput.value,
+  socketID: socket.id,
+})
+
+socket.emit("disconnect")

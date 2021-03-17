@@ -10,7 +10,21 @@ router.get("/", async (req, res) => {
   let rooms = {}
   let usersOnline
 
-  //Get all online users that are online
+  //Set user online
+  await userModel.findOneAndUpdate(
+    { userName: req.user.userName },
+    { $set: { userOnline: true } },
+    { new: true },
+    (error, data) => {
+      if (error) {
+        console.log("User not signed in")
+      } else {
+        console.log("User updated")
+      }
+    }
+  )
+
+  //Get all users thats online
   await userModel.find({}, (error, users) => {
     if (error) return handleError(error)
 

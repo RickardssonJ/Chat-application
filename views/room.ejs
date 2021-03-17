@@ -31,6 +31,14 @@
                        <% }) %>
                         </div>
 
+                        <!-- ALL USERS -->
+                    <div id="allUsers">
+                        <h6>Offline users:</h6>
+                        <% usersOffline.forEach(user => { %>
+                            <p class="users"><%= user.userName %></p>
+                       <% }) %>
+                    </div>
+
                     <div id="createRoomDiv">
                         <p>Create a new room</p>
                         <form action="/chatpage" method="post">
@@ -51,7 +59,7 @@
                    <% }) %>
 
 
-                    <!-- ///////////////////////// -->
+
                     <!-- ////////SKEIV UT BILDEN////////// -->
                    
                     <% for(let image of images) { %>
@@ -64,7 +72,7 @@
                     <div id="output"></div>
                     <div id="userTyping"></div>
                     
-<!-- //NOTE När nästa person loggar in så får alla det inloggade namnet -->
+
                 <form class="col-sm-9" id="form" >
                     <input
                     id="nameInput"
