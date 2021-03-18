@@ -2,9 +2,12 @@ const express = require("express")
 const router = express.Router()
 const NewUserModel = require("../models/users")
 
+const userModel = require("../models/users")
+
 //////////// CRYPT ////////////
 const bcrypt = require("bcrypt")
 const passport = require("passport")
+const { route } = require("./chatPage")
 
 /////////////////// ROUTES //////////////////
 router.get("/", (req, res) => {
@@ -50,6 +53,24 @@ router.post("/save", (req, res) => {
         .catch((value) => console.log(value))
     })
   )
+})
+
+////////////// LOGOUT THE USER /////////////////////
+router.get("/login/:logout", async (req, res) => {
+  await userModel.findOneAndUpdate(
+    { userName: req.user.userName },
+    { $set: { userOnline: false } },
+    { new: true },
+    (error, data) => {
+      if (error) {
+        console.log("User not signed out")
+      } else {
+        console.log("User signed out")
+      }
+    }
+  )
+
+  res.redirect("/")
 })
 
 module.exports = router

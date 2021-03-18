@@ -93,7 +93,7 @@ router.get("/:room", async (req, res) => {
 // NOTE BILD UPPLADDNING // Fixa så att det går att se alla bilder som skickas och inte bara den senaste
 router.post("/:room", async (req, res) => {
   //let room = req.params.room
-  // let images = []
+
   // console.log(images, "images")
   let room = {}
   let logedInUser = req.user.userName
@@ -107,11 +107,10 @@ router.post("/:room", async (req, res) => {
     if (req.files) {
       let fileUpload = req.files.fileUpload //Namnet på inputfältet
       let file_name = `/uploads/${fileUpload.name}`
-
-      await fileUpload.mv("." + file_name) //Flyttar in filen i våran mapp
+      await fileUpload.mv(`.${file_name}`) //Flyttar in filen i våran mapp
 
       res.render("room", {
-        images: [file_name],
+        images: file_name,
         rooms,
         room,
         usersOnline,
@@ -121,6 +120,7 @@ router.post("/:room", async (req, res) => {
       res.end("<h1>No file uploaded</h1>")
     }
   } catch (error) {}
+  res.files = ""
 
   res.end()
 })

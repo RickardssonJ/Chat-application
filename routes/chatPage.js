@@ -9,6 +9,7 @@ router.use(express.urlencoded({ extended: true }))
 router.get("/", async (req, res) => {
   let rooms = {}
   let usersOnline
+  let logedInUser = req.user.userName
 
   //Set user online
   await userModel.findOneAndUpdate(
@@ -18,8 +19,6 @@ router.get("/", async (req, res) => {
     (error, data) => {
       if (error) {
         console.log("User not signed in")
-      } else {
-        console.log("User updated")
       }
     }
   )
@@ -46,7 +45,7 @@ router.get("/", async (req, res) => {
     if (error) return handleError(error)
     rooms = data
   })
-  res.render("chatPage", { rooms, usersOnline })
+  res.render("chatPage", { rooms, usersOnline, logedInUser })
 })
 
 //Creating the new room

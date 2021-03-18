@@ -4,8 +4,8 @@
         <title><%= room.roomName %></title>
        <script>
          //NOTE eventuellt byta namn på room för att inte krocka med room som kommer ifrån rad 54 i rooms.js
-         const room = "<%= room.roomName %>" //Verkar inte behövas längre
-
+            const room = "<%= room.roomName %>" //Verkar inte behövas längre
+            const image = "<%= images %>"
        </script>
         <link
         rel="stylesheet"
@@ -24,8 +24,15 @@
                         <h2><a href="<%= room._id %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
+                    <!-- LOG OUT -->
+                    <div id="logOut">
+                        <form action="/login/:logout">
+                        <button type="submit" id="logOutBtn" class="btn btn-primary"> Logout</button>
+                    </form>
+                    </div>
+
                     <!-- ONLINE USERS -->
-                    <div id="onlineUsers"><h6>Online users:</h6>
+                    <div id="users"><h6>Online users:</h6>
                         <% usersOnline.forEach(user => { %>
                             <p class="users"><%= user.userName %></p>
                        <% }) %>
@@ -61,11 +68,8 @@
 
 
                     <!-- ////////SKEIV UT BILDEN////////// -->
-                   
-                    <% for(let image of images) { %>
-                        <img src="<%= image %>" alt="" /></br>
 
-                        <% } %>
+
                     <!-- ///////////////////////// -->
 
                     <ul id="messages"></ul>

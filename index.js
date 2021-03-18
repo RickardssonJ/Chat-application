@@ -72,8 +72,6 @@ io.on("connection", (socket) => {
     const name = data.name
     const user = { id, name }
     users.push(user)
-
-    console.log(users)
   })
 
   socket.on("chat", (chatObj) => {
@@ -81,7 +79,7 @@ io.on("connection", (socket) => {
     // let room = chatObj.room
     // let newMsg = chatObj.msgInput
     // let user = chatObj.nameInput
-    // NewRoomModel.findOneAndUpdate(
+    // roomModel.findOneAndUpdate(
     //   { roomName: room },
     //   { $push: { messages: `${user}: ${newMsg}` } },
     //   { new: true },
@@ -149,8 +147,9 @@ io.on("connection", (socket) => {
     )
   })
 
-  socket.on("disconnect", (data) => {
+  socket.on("disconnect", async (data) => {
     //TODO Fixa logg ut
+    //console.log("Signed out")
   })
 })
 

@@ -7,6 +7,8 @@ const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 const users = document.getElementsByClassName("users")
 const output = document.getElementById("output")
+const imageDiv = document.getElementById("imageDiv")
+const logOutBtn = document.getElementById("logOutBtn")
 
 let timeStamp = function () {
   let str = ""
@@ -31,6 +33,14 @@ let timeStamp = function () {
   return str
 }
 
+logOutBtn.addEventListener("click", (e) => {
+  console.log("Click")
+})
+
+// socket.on("users", (data) => {
+//   console.log("DATA CLIENT", data)
+// })
+
 form.addEventListener("submit", (e) => {
   e.preventDefault()
 
@@ -38,6 +48,7 @@ form.addEventListener("submit", (e) => {
     msgInput: msgInput.value,
     nameInput: nameInput.value,
     room: room,
+    picture: image,
   })
 
   msgInput.value = ""
@@ -49,6 +60,7 @@ msgInput.addEventListener("keypress", () => {
 })
 
 socket.on("chat", (data) => {
+  console.log(data.picture)
   userTyping.innerHTML = ""
   output.innerHTML +=
     "<p><strong>" +
@@ -58,6 +70,8 @@ socket.on("chat", (data) => {
     " :</br> </strong>" +
     data.msgInput +
     "</p>"
+  output.innerHTML += `<img src="${data.picture}">`
+
   //window.scrollTo(0, document.body.scrollHeight)
 })
 
@@ -91,4 +105,4 @@ socket.emit("join", {
   socketID: socket.id,
 })
 
-socket.emit("disconnect")
+//socket.emit("disconnect")
