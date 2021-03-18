@@ -106,7 +106,9 @@ router.post("/:room", async (req, res) => {
   try {
     if (req.files) {
       let fileUpload = req.files.fileUpload //Namnet på inputfältet
-      let file_name = `/uploads/${fileUpload.name}`
+      //let file_name = `/uploads/${fileUpload.name}`
+      let file_name = `/uploads/${logedInUser}_profilPic.jpg`
+
       await fileUpload.mv(`.${file_name}`) //Flyttar in filen i våran mapp
 
       res.render("room", {
@@ -120,7 +122,6 @@ router.post("/:room", async (req, res) => {
       res.end("<h1>No file uploaded</h1>")
     }
   } catch (error) {}
-  res.files = ""
 
   res.end()
 })

@@ -16,6 +16,9 @@
   <body>
     <div class="row no-gutters">
       <div class="col-sm-3 no-gutters">
+        <div id="sideBarProfilPic">
+          <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+        </div>
         <div id="sideBar">
           <% rooms.forEach(room => { %>
           <h2><a href="/rooms/<%= room._id %>"><%= room.roomName %></h2></a>
@@ -37,8 +40,16 @@
       </div>
       <div class="col-sm-9 no-gutters">
         <div id="chat-window">
-          <h1>Welcome <%= logedInUser %> Please select a room</h1>
-       
+          <h1>Welcome <%= logedInUser %> please select a room</h1>
+          <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+          <div id="ProfilPic">
+            <!-- Formulär för uppladning av filer -->
+            <h3>Here you can upload a profil picture</h3>
+              <form action="/chatPage/:profilPic" method="post" enctype="multipart/form-data">
+              <input type="file" name="profilPicUpload" /><br />
+              <button class="btn btn-success" type="submit" value="Upload">Upload</button>
+          </form>
+          </div>
         </div>
       </div>
     </div>

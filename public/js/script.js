@@ -33,10 +33,6 @@ let timeStamp = function () {
   return str
 }
 
-logOutBtn.addEventListener("click", (e) => {
-  console.log("Click")
-})
-
 // socket.on("users", (data) => {
 //   console.log("DATA CLIENT", data)
 // })

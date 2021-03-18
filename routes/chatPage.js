@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
   let rooms = {}
   let usersOnline
   let logedInUser = req.user.userName
+  //let profilPic = `/uploads/${logedInUser}.profilPic` //NOTE Försök med profil bild
 
   //Set user online
   await userModel.findOneAndUpdate(
@@ -62,6 +63,25 @@ router.post("/", (req, res) => {
     }
     res.redirect("/chatPage")
   })
+})
+
+//Profil picture upload
+router.post("/:profilPic", async (req, res) => {
+  let logedInUser = req.user.userName
+
+  try {
+    if (req.files) {
+      let profilPicUpload = req.files.profilPicUpload //Namnet på inputfältet
+      //let file_name = `/uploads/${fileUpload.name}`
+      let file_name = `/uploads/${logedInUser}_profilPic.jpg`
+
+      await profilPicUpload.mv(`.${file_name}`) //Flyttar in filen i våran mapp
+
+      res.redirect("/chatPage")
+    } else {
+      res.end("<h1>No file uploaded</h1>")
+    }
+  } catch (error) {}
 })
 
 // router.get("/:room", (req, res) => {

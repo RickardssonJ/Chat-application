@@ -18,16 +18,24 @@
     <body>
         <div class="row no-gutters">
             <div class="col-sm-3 no-gutters">
+                <div id="sideBarProfilPic">
+                    <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+                  </div>
                 <div id="sideBar">
                     <!-- SKRIVER UT ALLA RUMMEN -->
                     <% rooms.forEach(room => { %>
                         <h2><a href="<%= room._id %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
-                    <!-- LOG OUT -->
+                    <!-- LOG OUT/PROFILE PAGE -->
+                    <div id="toProfil">
+                        <form action="/chatPage">
+                        <button type="submit" id="logOutBtn" class="btn btn-primary"> Profile </button>
+                    </form>
+                    </div>
                     <div id="logOut">
                         <form action="/login/:logout">
-                        <button type="submit" id="logOutBtn" class="btn btn-primary"> Logout</button>
+                        <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
                     </form>
                     </div>
 
