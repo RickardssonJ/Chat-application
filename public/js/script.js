@@ -33,6 +33,11 @@ let timeStamp = function () {
   return str
 }
 
+function updateScroll() {
+  const chatWindow = document.getElementById("chat-window")
+  chatWindow.scrollTop = chatWindow.scrollHeight
+}
+
 // socket.on("users", (data) => {
 //   console.log("DATA CLIENT", data)
 // })
@@ -66,8 +71,8 @@ socket.on("chat", (data) => {
     " :</br> </strong>" +
     data.msgInput +
     "</p>"
-
-  window.scrollTo(0, document.body.scrollHeight)
+  updateScroll()
+  //window.scrollTo(0, document.body.scrollHeight)
 })
 
 socket.on("typing", (data, room) => {

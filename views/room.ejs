@@ -27,6 +27,7 @@
                         <h2><a href="<%= room._id %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
+                    <h5>Click on a online user to start a private conversation</h5>
                     <!-- LOG OUT/PROFILE PAGE -->
                     <div id="toProfil">
                         <form action="/chatPage">
@@ -76,9 +77,9 @@
                 <% room.messages.forEach(message => { %>
                     <p><%= message %></p>
                    <% }) %>
-                        <ul id="messages"></ul>
-                        <div id="userTyping"></div>
                     </div>
+                    <ul id="messages"></ul>
+                        <div id="userTyping"></div>
                     
 
                 <form class="col-sm-9" id="form" >

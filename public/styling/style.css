@@ -93,14 +93,15 @@ p {
 }
 
 #chat-window {
-
+height: 80vh;
   background-color: rgb(108, 68, 68);
-  height: 100vh;
+  overflow-y:auto;
+
 }
 
 #output{
-  height: 100vh;
-  overflow-y:auto;
+
 }
+
 
 /* ///////////////////// */

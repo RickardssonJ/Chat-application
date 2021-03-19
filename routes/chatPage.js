@@ -1,12 +1,13 @@
 const express = require("express")
 const router = express.Router()
+const { ensureAuthenticated } = require("../confiq/auth")
 
 const NewRoomModel = require("../models/roomsModel")
 const userModel = require("../models/users")
 
 router.use(express.urlencoded({ extended: true }))
 
-router.get("/", async (req, res) => {
+router.get("/", ensureAuthenticated, async (req, res) => {
   let rooms = {}
   let usersOnline
   let logedInUser = req.user.userName
@@ -50,7 +51,7 @@ router.get("/", async (req, res) => {
 })
 
 //Creating the new room
-router.post("/", (req, res) => {
+router.post("/", ensureAuthenticated, (req, res) => {
   const newRoom = new NewRoomModel({
     roomName: req.body.newRoomName,
     messages: [],
@@ -66,7 +67,7 @@ router.post("/", (req, res) => {
 })
 
 //Profil picture upload
-router.post("/:profilPic", async (req, res) => {
+router.post("/:profilPic", ensureAuthenticated, async (req, res) => {
   let logedInUser = req.user.userName
 
   try {
@@ -96,8 +97,7 @@ router.post("/:profilPic", async (req, res) => {
   } catch (error) {}
 })
 
-
-router.post("/change/:userName", (req, res) => {
+router.post("/change/:userName", ensureAuthenticated, (req, res) => {
   console.log(req.body.newUserName)
   let newUserName = req.body.newUserName
   let user = req.user.userName

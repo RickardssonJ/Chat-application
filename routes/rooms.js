@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const { ensureAuthenticated } = require("../confiq/auth")
+
 const roomModel = require("../models/roomsModel")
 const userModel = require("../models/users")
 
@@ -27,15 +29,15 @@ function handleError(error) {
 let rooms = []
 let room = {}
 
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   res.redirect("/chatPage")
 })
 
-router.get("/:room", async (req, res) => {
+router.get("/:room", ensureAuthenticated, async (req, res) => {
   let images = []
   let userDoc = req.user
   //let room = {}
-  
+
   //NOTE varför heter funktionerna samma namn
   let getOfflineUsers = async function () {
     await userModel.find({}, (error, users) => {
@@ -81,7 +83,7 @@ router.get("/:room", async (req, res) => {
 })
 
 // NOTE BILD UPPLADDNING // Fixa så att det går att se alla bilder som skickas och inte bara den senaste
-router.post("/:room", async (req, res) => {
+router.post("/:room", ensureAuthenticated, async (req, res) => {
   //let room = req.params.room
 
   // console.log(images, "images")
