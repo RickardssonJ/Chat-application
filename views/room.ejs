@@ -19,7 +19,7 @@
         <div class="row no-gutters">
             <div class="col-sm-3 no-gutters">
                 <div id="sideBarProfilPic">
-                    <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+                    <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
                   </div>
                 <div id="sideBar">
                     <!-- SKRIVER UT ALLA RUMMEN -->
@@ -66,23 +66,19 @@
                 </div>
                 <div class="col-sm-9 no-gutters">
             <h1>Welcome to the <%= room.roomName %> room!</h1>
+
             <div id="chat-window">
 
-                <!-- Skriver ut alla tidigare meddelanden -->
+                
+
+                    <div id="output">
+                        <!-- Skriver ut alla tidigare meddelanden -->
                 <% room.messages.forEach(message => { %>
                     <p><%= message %></p>
                    <% }) %>
-
-
-
-                    <!-- ////////SKEIV UT BILDEN////////// -->
-
-
-                    <!-- ///////////////////////// -->
-
-                    <ul id="messages"></ul>
-                    <div id="output"></div>
-                    <div id="userTyping"></div>
+                        <ul id="messages"></ul>
+                        <div id="userTyping"></div>
+                    </div>
                     
 
                 <form class="col-sm-9" id="form" >

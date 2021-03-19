@@ -17,14 +17,12 @@
     <div class="row no-gutters">
       <div class="col-sm-3 no-gutters">
         <div id="sideBarProfilPic">
-          <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+          <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
         </div>
         <div id="sideBar">
           <% rooms.forEach(room => { %>
           <h2><a href="/rooms/<%= room._id %>"><%= room.roomName %></h2></a>
           <% }) %>
-         
-          <!--//NOTE fixa online users //////////////ONLINE USERS ////////////////// -->
           
 
         </div>
@@ -41,10 +39,17 @@
       <div class="col-sm-9 no-gutters">
         <div id="chat-window">
           <h1>Welcome <%= logedInUser %> please select a room</h1>
-          <img src="/uploads/<%= logedInUser %>_profilPic.jpg" alt="">
+          <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
+
+           <!-- CRUD -->
+          <form action="/chatPage/change/:userName" method="post">
+            <label for="newUserName"><h3>Change user name</h3></label></br>
+              <input type="text" name="newUserName" value="<%= logedInUser %>">
+              <button type="submit">Change name</button>
+          </form>
+          <!-- Formulär för uppladning av filer -->
           <div id="ProfilPic">
-            <!-- Formulär för uppladning av filer -->
-            <h3>Here you can upload a profil picture</h3>
+            <h3>Here you can upload or change a profil picture</h3>
               <form action="/chatPage/:profilPic" method="post" enctype="multipart/form-data">
               <input type="file" name="profilPicUpload" /><br />
               <button class="btn btn-success" type="submit" value="Upload">Upload</button>

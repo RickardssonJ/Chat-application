@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
   let rooms = {}
   let usersOnline
   let logedInUser = req.user.userName
-  //let profilPic = `/uploads/${logedInUser}.profilPic` //NOTE Försök med profil bild
+  let userDoc = req.user
 
   //Set user online
   await userModel.findOneAndUpdate(
@@ -46,7 +46,7 @@ router.get("/", async (req, res) => {
     if (error) return handleError(error)
     rooms = data
   })
-  res.render("chatPage", { rooms, usersOnline, logedInUser })
+  res.render("chatPage", { rooms, usersOnline, logedInUser, userDoc })
 })
 
 //Creating the new room
@@ -74,14 +74,48 @@ router.post("/:profilPic", async (req, res) => {
       let profilPicUpload = req.files.profilPicUpload //Namnet på inputfältet
       //let file_name = `/uploads/${fileUpload.name}`
       let file_name = `/uploads/${logedInUser}_profilPic.jpg`
-
       await profilPicUpload.mv(`.${file_name}`) //Flyttar in filen i våran mapp
+
+      userModel.findOneAndUpdate(
+        { userName: logedInUser },
+        { profilPic: file_name },
+        { new: true },
+        (error, data) => {
+          if (error) {
+            console.log("error updating collection")
+          } else {
+            console.log(data)
+          }
+        }
+      )
 
       res.redirect("/chatPage")
     } else {
       res.end("<h1>No file uploaded</h1>")
     }
   } catch (error) {}
+})
+
+
+router.post("/change/:userName", (req, res) => {
+  console.log(req.body.newUserName)
+  let newUserName = req.body.newUserName
+  let user = req.user.userName
+
+  userModel.findOneAndUpdate(
+    { userName: user },
+    { userName: newUserName },
+    { new: true },
+    (error) => {
+      if (error) {
+        console.log("error changing user name")
+      } else {
+        console.log("User name changed")
+      }
+    }
+  )
+
+  res.redirect("/chatPage")
 })
 
 // router.get("/:room", (req, res) => {

@@ -25,29 +25,18 @@ function handleError(error) {
 /////////////////////
 
 let rooms = []
+let room = {}
 
 router.get("/", (req, res) => {
-  // console.log("/")
-  // roomModel.find({}, "roomName", (error, rooms) => {
-  //   if (error) return handleError(error)
-  //res.render("chatPage.ejs", { rooms })
   res.redirect("/chatPage")
-  // })
 })
 
 router.get("/:room", async (req, res) => {
   let images = []
-  let room = {}
-  //NOTE Ändra så att bara offline users syns
-  // let allUsersInDb
-  // await userModel.find({}, (error, users) => {
-  //   if (error) {
-  //     console.log("Could not get users from rooms.js")
-  //   } else {
-  //     allUsersInDb = users
-  //   }
-  // })
-
+  let userDoc = req.user
+  //let room = {}
+  
+  //NOTE varför heter funktionerna samma namn
   let getOfflineUsers = async function () {
     await userModel.find({}, (error, users) => {
       if (error) return handleError(error)
@@ -87,6 +76,7 @@ router.get("/:room", async (req, res) => {
     usersOnline,
     logedInUser: req.user.userName,
     usersOffline,
+    userDoc,
   })
 })
 

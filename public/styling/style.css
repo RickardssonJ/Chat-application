@@ -71,6 +71,16 @@ body {
 
 /* /////////TEST KOD//////////// */
 
+#profilPic{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+h1, h6{
+  color: white;
+}
+
 p {
   color: white;
   margin-left: 20px;
@@ -78,13 +88,19 @@ p {
 
 #sideBar {
   background-color: rgb(90, 3, 3);
-  height: 100vh;
+  height: 50vh;
   /* width: 40%; */
 }
 
 #chat-window {
+
   background-color: rgb(108, 68, 68);
   height: 100vh;
+}
+
+#output{
+  height: 100vh;
+  overflow-y:auto;
 }
 
 /* ///////////////////// */

@@ -66,9 +66,8 @@ socket.on("chat", (data) => {
     " :</br> </strong>" +
     data.msgInput +
     "</p>"
-  output.innerHTML += `<img src="${data.picture}">`
 
-  //window.scrollTo(0, document.body.scrollHeight)
+  window.scrollTo(0, document.body.scrollHeight)
 })
 
 socket.on("typing", (data, room) => {
