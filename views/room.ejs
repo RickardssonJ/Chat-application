@@ -27,23 +27,11 @@
                         <h2><a href="<%= room._id %>"><%= room.roomName %></h2></a>
                         <% }) %>
                     </div>
-                    <h5>Click on a online user to start a private conversation</h5>
-                    <!-- LOG OUT/PROFILE PAGE -->
-                    <div id="toProfil">
-                        <form action="/chatPage">
-                        <button type="submit" id="logOutBtn" class="btn btn-primary"> Profile </button>
-                    </form>
-                    </div>
-                    <div id="logOut">
-                        <form action="/login/:logout">
-                        <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
-                    </form>
-                    </div>
-
-                    <!-- ONLINE USERS -->
-                    <div id="users"><h6>Online users:</h6>
+                    <h4>Click on a online user to start a private conversation</h4>
+                      <!-- ONLINE USERS -->
+                      <div id="users"><h6>Online users:</h6>
                         <% usersOnline.forEach(user => { %>
-                            <p class="users"><%= user.userName %></p>
+                            <p id="onlineUsers" class="users"><%= user.userName %></p>
                        <% }) %>
                         </div>
 
@@ -51,9 +39,12 @@
                     <div id="allUsers">
                         <h6>Offline users:</h6>
                         <% usersOffline.forEach(user => { %>
-                            <p class="users"><%= user.userName %></p>
+                            <p id="offlineUsers" class="users"><%= user.userName %></p>
                        <% }) %>
                     </div>
+                   
+
+                  
 
                     <div id="createRoomDiv">
                         <p>Create a new room</p>
@@ -65,13 +56,23 @@
                       </div>
                       
                 </div>
-                <div class="col-sm-9 no-gutters">
-            <h1>Welcome to the <%= room.roomName %> room!</h1>
+                <div id="test" class="col-sm-9 no-gutters">
+                    <div id="welcomeText">
+                      <h1>Welcome to the <%= room.roomName %> room!</h1>
+                       <!-- LOG OUT/PROFILE PAGE -->
+                    <div id="toProfil">
+                        <form action="/chatPage">
+                        <button type="submit" id="logOutBtn" class="btn btn-primary"> Profile </button>
+                    </form>
+                    </div>
+                    <div id="logOut">
+                        <form action="/login/:logout">
+                        <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
+                    </form>
+                    </div>
+                     </div>
 
             <div id="chat-window">
-
-                
-
                     <div id="output">
                         <!-- Skriver ut alla tidigare meddelanden -->
                 <% room.messages.forEach(message => { %>

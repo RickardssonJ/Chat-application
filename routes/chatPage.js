@@ -80,11 +80,12 @@ router.post("/:profilPic", ensureAuthenticated, async (req, res) => {
 
 router.post("/change/:userName", ensureAuthenticated, (req, res) => {
   let newUserName = req.body.newUserName
+  let newUserMail = req.body.newUserMail
   let user = req.user.userName
 
   userModel.findOneAndUpdate(
     { userName: user },
-    { userName: newUserName },
+    { $set: { userName: newUserName, userMail: newUserMail } },
     { new: true },
     (error) => {
       if (error) {

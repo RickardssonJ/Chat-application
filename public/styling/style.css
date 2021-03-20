@@ -69,12 +69,14 @@ body {
   background: #efefef;
 }
 
-/* /////////TEST KOD//////////// */
+
 
 #profilPic{
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
+  margin-bottom: 50px;
+  border-radius: 50%;
 }
 
 h1, h6{
@@ -88,7 +90,9 @@ p {
 
 #sideBar {
   background-color: rgb(90, 3, 3);
-  height: 50vh;
+  height: 30vh;
+  overflow-y:auto;
+
   /* width: 40%; */
 }
 
@@ -99,9 +103,39 @@ height: 85vh;
 
 }
 
-#output{
 
+#changeInfo{
+margin-bottom: 50px;
 }
+
+#profilPagePic{
+margin-bottom: 50px;
+}
+
+#sideBarProfilPic{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  }
+
+
+
+  #welcomeText{
+    display: flex;
+    justify-content: space-evenly
+  }
+
+  #onlineUsers{
+    color: rgb(47, 255, 85);
+    cursor: pointer;
+  }
+  #offlineUsers{
+    color: red;
+  }
 
 
 /* ///////////////////// */

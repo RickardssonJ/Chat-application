@@ -38,23 +38,34 @@
       </div>
       <div class="col-sm-9 no-gutters">
         <div id="chat-window">
-          <h1>Welcome <%= logedInUser %> please select a room to start chatting or update your profile here.</h1>
+          <h2>Welcome <%= logedInUser %> please select a room to start chatting or update your profile here.</h2>
+          <div id="profilPagePic">
           <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
+        </div>
 
            <!-- CRUD -->
+           <div id="changeInfo">
           <form action="/chatPage/change/:userName" method="post">
-            <label for="newUserName"><h3>Change user name</h3></label></br>
-              <input type="text" name="newUserName" value="<%= logedInUser %>">
-              <button type="submit">Change name</button>
+            <label for="newUserName"><h3>Change user information</h3></label></br>
+              <input type="text" name="newUserName" value="<%= logedInUser %>"></br>
+              <input type="text" name="newUserMail" value="<%= userDoc.userMail %>"></br>
+              <button class="btn btn-primary" type="submit">Change info</button>
           </form>
-          <!-- Formulär för uppladning av filer -->
+        </div>
+          <!-- Formulär för uppladning av profilbild -->
           <div id="ProfilPic">
-            <h3>Upload or change a profil picture</h3>
+            <h3>Upload or change your profil picture</h3>
               <form action="/chatPage/:profilPic" method="post" enctype="multipart/form-data">
-              <input type="file" name="profilPicUpload" /><br />
-              <button class="btn btn-success" type="submit" value="Upload">Upload</button>
-          </form>
+               <input type="file" name="profilPicUpload" /><br />
+               <button class="btn btn-success" type="submit" value="Upload">Upload</button>
+              </form>
           </div>
+          <!-- LOGOUT -->
+        <div id="logOut">
+            <form action="/login/:logout">
+            <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
+        </form>
+        </div>
         </div>
       </div>
     </div>
