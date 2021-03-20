@@ -36,11 +36,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 ///////////////// ROUTES ///////////////////
-const indexRouter = require("./routes/index")
+const logInRouter = require("./routes/login")
 const chatPageRouter = require("./routes/chatPage")
 const roomsRouter = require("./routes/rooms")
 
-app.use("/", indexRouter)
+app.use("/", logInRouter)
 app.use("/chatPage", chatPageRouter)
 app.use("/rooms", roomsRouter)
 
@@ -76,24 +76,21 @@ io.on("connection", (socket) => {
 
   socket.on("chat", (chatObj) => {
     /////////////// PUSCHA MEDDELANDEN IN I DB ////////////////////
-    // let room = chatObj.room
-    // let newMsg = chatObj.msgInput
-    // let user = chatObj.nameInput
-    // roomModel.findOneAndUpdate(
-    //   { roomName: room },
-    //   { $push: { messages: `${user}: ${newMsg}` } },
-    //   { new: true },
-    //   (error, data) => {
-    //     if (error) {
-    //       console.log("error updating collection")
-    //     } else {
-    //       console.log(data)
-    //     }
-    //   }
-    // )
+    let room = chatObj.room
+    let newMsg = chatObj.msgInput
+    let user = chatObj.nameInput
+    roomModel.findOneAndUpdate(
+      { roomName: room },
+      { $push: { messages: `${user}: ${newMsg}` } },
+      { new: true },
+      (error, data) => {
+        if (error) {
+          console.log("error updating collection")
+        }
+      }
+    )
 
     ///////////////////////////////////////////////////////////////////
-    //socket.join(chatObj.room)
 
     io.to(chatObj.room).emit("chat", chatObj)
   })
@@ -145,11 +142,6 @@ io.on("connection", (socket) => {
       "alert",
       `You have a PM from ${sendersName} click on the person to open it`
     )
-  })
-
-  socket.on("disconnect", async (data) => {
-    //TODO Fixa logg ut
-    //console.log("Signed out")
   })
 })
 

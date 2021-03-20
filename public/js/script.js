@@ -38,10 +38,6 @@ function updateScroll() {
   chatWindow.scrollTop = chatWindow.scrollHeight
 }
 
-// socket.on("users", (data) => {
-//   console.log("DATA CLIENT", data)
-// })
-
 form.addEventListener("submit", (e) => {
   e.preventDefault()
 
@@ -72,7 +68,6 @@ socket.on("chat", (data) => {
     data.msgInput +
     "</p>"
   updateScroll()
-  //window.scrollTo(0, document.body.scrollHeight)
 })
 
 socket.on("typing", (data, room) => {
@@ -98,11 +93,8 @@ socket.on("alert", (msg) => {
 })
 
 //Skickar rummet som användaren ansluter till, tillbaka till servern
-//NOTE name och socketID behövs inte.
 socket.emit("join", {
   room: room,
   name: nameInput.value,
   socketID: socket.id,
 })
-
-//socket.emit("disconnect")
