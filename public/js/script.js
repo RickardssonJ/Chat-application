@@ -60,13 +60,16 @@ socket.on("chat", (data) => {
   console.log(data.picture)
   userTyping.innerHTML = ""
   output.innerHTML +=
-    "<p><strong>" +
+    "<p>" +
+    `<img id="profilInChat" src="/uploads/${data.nameInput}_profilPic.jpg"></img>` +
+    "<strong>" +
     data.nameInput +
     " " +
     timeStamp() +
     " :</br> </strong>" +
     data.msgInput +
     "</p>"
+
   updateScroll()
 })
 
