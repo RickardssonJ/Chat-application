@@ -110,6 +110,7 @@ io.on("connection", (socket) => {
 
     let theReciverDoc = await userModel.findOne({ userName: reciverName })
     let reciverID = theReciverDoc._id
+    console.log("theReciverDoc", theReciverDoc)
 
     let theSenderDoc = await userModel.findOne({ userName: sendersName })
     let senderID = theSenderDoc._id

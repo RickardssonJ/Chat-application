@@ -8,7 +8,6 @@ const userModel = require("../models/users")
 router.use(express.urlencoded({ extended: true }))
 
 router.get("/", ensureAuthenticated, async (req, res) => {
-  // let rooms //NOTE här upstår buggen?
   let logedInUser = req.user.userName
   let userDoc = req.user
 
@@ -24,13 +23,13 @@ router.get("/", ensureAuthenticated, async (req, res) => {
     }
   )
 
+  //Get all non private rooms
   await roomModel.find({ private: false }, (error, data) => {
     if (error) return handleError(error)
     rooms = data
   })
 
   res.render("chatPage", { rooms, logedInUser, userDoc })
-  console.log("ROOMS", rooms)
 })
 
 //Creating the new room
@@ -59,6 +58,7 @@ router.post("/:profilPic", ensureAuthenticated, async (req, res) => {
       let file_name = `/uploads/${logedInUser}_profilPic.jpg`
       await profilPicUpload.mv(`.${file_name}`) //Flyttar in filen i våran mapp
 
+      //Find user and update profil picture
       userModel.findOneAndUpdate(
         { userName: logedInUser },
         { profilPic: file_name },
@@ -78,6 +78,7 @@ router.post("/:profilPic", ensureAuthenticated, async (req, res) => {
   } catch (error) {}
 })
 
+//Change username and/or Email
 router.post("/change/:userName", ensureAuthenticated, (req, res) => {
   let newUserName = req.body.newUserName
   let newUserMail = req.body.newUserMail

@@ -7,7 +7,6 @@ const nameInput = document.getElementById("nameInput")
 const userTyping = document.getElementById("userTyping")
 const users = document.getElementsByClassName("users")
 const output = document.getElementById("output")
-const imageDiv = document.getElementById("imageDiv")
 const logOutBtn = document.getElementById("logOutBtn")
 
 let timeStamp = function () {
@@ -44,8 +43,7 @@ form.addEventListener("submit", (e) => {
   socket.emit("chat", {
     msgInput: msgInput.value,
     nameInput: nameInput.value,
-    room: room,
-    picture: image,
+    room: room_name,
   })
 
   msgInput.value = ""
@@ -53,11 +51,10 @@ form.addEventListener("submit", (e) => {
 })
 
 msgInput.addEventListener("keypress", () => {
-  socket.emit("typing", nameInput.value, room)
+  socket.emit("typing", nameInput.value, room_name)
 })
 
 socket.on("chat", (data) => {
-  console.log(data.picture)
   userTyping.innerHTML = ""
   output.innerHTML +=
     "<p>" +
@@ -80,7 +77,7 @@ socket.on("typing", (data, room) => {
 for (user of users) {
   user.addEventListener("click", (e) => {
     socket.emit("startPM", {
-      reciverName: e.target.textContent,
+      reciverName: e.target.innerText,
       sendersName: nameInput.value,
       socketID: socket.id,
     })
@@ -95,9 +92,8 @@ socket.on("alert", (msg) => {
   alert(msg)
 })
 
-//Skickar rummet som användaren ansluter till, tillbaka till servern
 socket.emit("join", {
-  room: room,
+  room: room_name,
   name: nameInput.value,
   socketID: socket.id,
 })

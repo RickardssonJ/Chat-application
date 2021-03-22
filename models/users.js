@@ -9,4 +9,4 @@ const NewUserSchema = new Schema({
   userOnline: { type: Boolean },
 })
 
-module.exports = mongoose.model("users", NewUserSchema) //NewUser är vad den kommer att heta i databasen
+module.exports = mongoose.model("users", NewUserSchema)

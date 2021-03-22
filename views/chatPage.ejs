@@ -1,80 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Welcome</title>
-<script>
-  
-</script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/public/styling/style.css" />
-  </head>
-  <body>
-    <div class="row no-gutters">
-      <div class="col-sm-3 no-gutters">
-        <div id="sideBarProfilPic">
-          <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
-        </div>
-        <div id="sideBar">
-          <% rooms.forEach(room => { %>
-          <h2><a href="/rooms/<%= room._id %>"><%= room.roomName %></h2></a>
-          <% }) %>
-          
 
-        </div>
-        <div id="createRoomDiv">
-          <p>Create a new room</p>
-          <form action="/chatpage" method="post">
-              <label for="newRoomName">Name</label>
-            <input type="text" name="newRoomName">
-            <input type="submit" value="Create new room">
-            </form>
-        </div>
+<head>
+  <title>Welcome</title>
+  <script>
 
+  </script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/public/styling/style.css" />
+</head>
+
+<body>
+  <div class="row no-gutters">
+    <div class="col-sm-3 no-gutters">
+      <div id="sideBarProfilPic">
+        <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
       </div>
-      <div class="col-sm-9 no-gutters">
-        <div id="chat-window">
-          <h2>Welcome <%= logedInUser %> please select a room to start chatting or update your profile here.</h2>
-          <div id="profilPagePic">
+      <div id="sideBar">
+        <% rooms.forEach(room=> { %>
+          <h2><a href="/rooms/<%= room._id %>">
+              <%= room.roomName %>
+          </h2></a>
+          <% }) %>
+
+        <!-- CREATE A NEW ROOM -->
+      </div>
+      <div id="createRoomDiv">
+        <p>Create a new room</p>
+        <form action="/chatpage" method="post">
+          <label for="newRoomName">Name</label>
+          <input type="text" name="newRoomName">
+          <input type="submit" value="Create new room">
+        </form>
+      </div>
+
+    </div>
+    <div class="col-sm-9 no-gutters">
+      <div id="chat-window">
+        <h2>Welcome <%= logedInUser %> please select a room to start chatting or update your profile here.</h2>
+        <div id="profilPagePic">
           <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
         </div>
 
-           <!-- CRUD -->
-           <div id="changeInfo">
+        <!-- CRUD -->
+        <div id="changeInfo">
           <form action="/chatPage/change/:userName" method="post">
-            <label for="newUserName"><h3>Change user information</h3></label></br>
-              <input type="text" name="newUserName" value="<%= logedInUser %>"></br>
-              <input type="text" name="newUserMail" value="<%= userDoc.userMail %>"></br>
-              <button class="btn btn-primary" type="submit">Change info</button>
+            <label for="newUserName">
+              <h3>Change user information</h3>
+            </label></br>
+            <input type="text" name="newUserName" value="<%= logedInUser %>"></br>
+            <input type="text" name="newUserMail" value="<%= userDoc.userMail %>"></br>
+            <button class="btn btn-primary" type="submit">Change info</button>
           </form>
         </div>
-          <!-- Formulär för uppladning av profilbild -->
-          <div id="ProfilPic">
-            <h3>Upload or change your profil picture</h3>
-              <form action="/chatPage/:profilPic" method="post" enctype="multipart/form-data">
-               <input type="file" name="profilPicUpload" /><br />
-               <button class="btn btn-success" type="submit" value="Upload">Upload</button>
-              </form>
-          </div>
-          <!-- LOGOUT -->
-        <div id="logOut">
-            <form action="/login/:logout">
-            <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
-        </form>
+        <!-- PROFILE PICTURE UPLOAD FORM -->
+        <div id="ProfilPic">
+          <h3>Upload or change your profil picture</h3>
+          <form action="/chatPage/:profilPic" method="post" enctype="multipart/form-data">
+            <input type="file" name="profilPicUpload" /><br />
+            <button class="btn btn-success" type="submit" value="Upload">Upload</button>
+          </form>
         </div>
+        <!-- LOGOUT -->
+        <div id="logOut">
+          <form action="/login/:logout">
+            <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
+          </form>
         </div>
       </div>
     </div>
-    <script>
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-      crossorigin="anonymous"
-    </script>
-    <script src="/public/js/script.js"></script>
+  </div>
+  <script>
+    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity = "sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin = "anonymous"
+  </script>
+  <script src="/public/js/script.js"></script>
 
-  </body>
+</body>
+
 </html>

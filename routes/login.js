@@ -9,7 +9,6 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 const { route } = require("./chatPage")
 
-/////////////////// ROUTES //////////////////
 router.get("/", (req, res) => {
   res.render("landingPage", { welcomeText: "Create account" })
 })
@@ -22,6 +21,7 @@ router.get("/login", (req, res) => {
   res.render("login")
 })
 
+//Check authentication
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/chatPage",
@@ -29,6 +29,7 @@ router.post("/login", (req, res, next) => {
   })(req, res, next)
 })
 
+//Create new user
 router.post("/save", (req, res) => {
   const newUser = new NewUserModel({
     userName: req.body.userName,
@@ -55,7 +56,7 @@ router.post("/save", (req, res) => {
   )
 })
 
-////////////// LOGOUT THE USER /////////////////////
+//Log out user
 router.get("/login/:logout", async (req, res) => {
   await userModel.findOneAndUpdate(
     { userName: req.user.userName },

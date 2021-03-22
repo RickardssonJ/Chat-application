@@ -11,8 +11,8 @@ let rooms = []
 let room = {}
 
 router.get("/:room", ensureAuthenticated, async (req, res) => {
-  let images = []
   let userDoc = req.user
+  console.log(userDoc)
 
   //Get all offline users
   await userModel.find({}, (error, users) => {
@@ -32,6 +32,7 @@ router.get("/:room", ensureAuthenticated, async (req, res) => {
     })
   })
 
+  //Get all nonprivate rooms
   await roomModel.find({ private: false }, (error, data) => {
     if (error) return handleError(error)
     rooms = data
@@ -43,7 +44,6 @@ router.get("/:room", ensureAuthenticated, async (req, res) => {
   })
 
   res.render("room", {
-    images,
     rooms,
     room,
     usersOnline,
