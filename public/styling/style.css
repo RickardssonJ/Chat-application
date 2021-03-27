@@ -69,9 +69,7 @@ body {
   background: #efefef;
 }
 
-
-
-#profilPic{
+#profilPic {
   width: 120px;
   height: 120px;
   object-fit: cover;
@@ -79,74 +77,116 @@ body {
   border-radius: 50%;
 }
 
-#profilInChat{
+#profilInChat {
   width: 40px;
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
   margin-right: 5px;
   margin-bottom: 5px;
-
 }
 
-h1, h6{
+h1,
+h6,
+h2,
+h3,
+h4 {
   color: white;
 }
 
 p {
   color: white;
   margin-left: 20px;
-
 }
 
-#sideBar {
+/* #sideBar {
   background-color: rgb(90, 3, 3);
   height: 30vh;
-  overflow-y:auto;
+  overflow-y: auto;
+} */
 
-  /* width: 40%; */
+.sidePanel {
+  margin: 0 auto;
+  background-color: rgb(108, 68, 68);
+  width: 90%;
+  /* border-radius: 5%; */
+  height: 100vh;
+}
+
+.sidePanelProfil {
+  margin: 0 auto;
+  background-color: rgb(108, 68, 68);
+  width: 90%;
+  /* border-radius: 5%; */
+  height: 82vh;
 }
 
 #chat-window {
-height: 85vh;
+  height: 85vh;
   background-color: rgb(108, 68, 68);
-  overflow-y:auto;
-
+  overflow-y: auto;
 }
 
-
-#changeInfo{
-margin-bottom: 50px;
+#changeInfo {
+  margin-bottom: 50px;
 }
 
-#profilPagePic{
-margin-bottom: 50px;
-}
-
-#sideBarProfilPic{
-
+#sideBarProfilPic {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
   margin-top: 30px;
-  margin-bottom: 10px;
-  }
+}
 
+#welcomeText {
+  display: flex;
+  justify-content: space-evenly;
+}
 
+#onlineUsers {
+  color: rgb(47, 255, 85);
+  cursor: pointer;
+}
+#offlineUsers {
+  color: red;
+}
 
-  #welcomeText{
-    display: flex;
-    justify-content: space-evenly
-  }
+/* ///////////////////////////// */
+#roomDiv {
+  margin: 0 auto;
+  margin-bottom: 10%;
+  background-color: rgb(108, 68, 68);
+  width: 90%;
+  border-radius: 5%;
+  height: 100%;
+}
 
-  #onlineUsers{
-    color: rgb(47, 255, 85);
-    cursor: pointer;
-  }
-  #offlineUsers{
-    color: red;
-  }
+#onlineUsersDiv {
+  margin: 0 auto;
+  background-color: rgb(108, 68, 68);
+  width: 90%;
+  border-radius: 5%;
+}
 
+#onlineUserText {
+  margin-bottom: 10%;
+}
+/* ///////////////////////////// */
+
+a {
+  text-decoration: none;
+  color: rgb(240, 199, 170);
+}
+a:hover {
+  color: rgb(240, 118, 32);
+
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#logOut {
+  margin-top: 5%;
+}
 
 /* ///////////////////// */

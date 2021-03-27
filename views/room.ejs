@@ -16,47 +16,54 @@
 <body>
     <div class="row no-gutters">
         <div class="col-sm-3 no-gutters">
+            <div class="sidePanel">
             <div id="sideBarProfilPic">
                 <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
             </div>
-            <div id="sideBar">
-                <!-- SKRIVER UT ALLA RUMMEN -->
-                <% rooms.forEach(room=> { %>
-                    <h2><a href="<%= room._id %>">
-                            <%= room.roomName %>
-                    </h2></a>
-                    <% }) %>
-            </div>
-            <h4>Click on a online user to start a private conversation</h4>
-            <!-- ONLINE USERS -->
-            <div id="users">
-                <h6>Online users:</h6>
-                <% usersOnline.forEach(user=> { %>
-                    <p id="onlineUsers" class="users">
-                        <%= user.userName %>
-                    </p>
-                    <% }) %>
-            </div>
+                <div id="sideBar">
+                    <div id="roomDiv">
+                        <!-- SKRIVER UT ALLA RUMMEN -->
+                        <% rooms.forEach(room=> { %>
+                            <h2><a href="<%= room._id %>">
+                                    <%= room.roomName %>
+                            </h2></a>
+                            <% }) %>
+                    </div>
+                </div>
+                <div id="onlineUserText">
+                    <h4>Click on a online user to start a private conversation</h4>
+                </div>
+                <!-- ONLINE USERS -->
+                <div id="onlineUsersDiv">
+                    <div id="users">
+                        <h6 class="onlineText">Online users:</h6>
+                        <% usersOnline.forEach(user=> { %>
+                            <p id="onlineUsers" class="users">
+                                <%= user.userName %>
+                            </p>
+                            <% }) %>
+                    </div>
 
-            <!-- ALL USERS -->
-            <div id="allUsers">
-                <h6>Offline users:</h6>
-                <% usersOffline.forEach(user=> { %>
-                    <p id="offlineUsers" class="users">
-                        <%= user.userName %>
-                    </p>
-                    <% }) %>
-            </div>
+                    <!-- ALL USERS -->
+                    <div id="allUsers">
+                        <h6 class="onlineText">Offline users:</h6>
+                        <% usersOffline.forEach(user=> { %>
+                            <p id="offlineUsers" class="users">
+                                <%= user.userName %>
+                            </p>
+                            <% }) %>
+                    </div>
+                </div>
                 <!-- CREATE A NEW ROOM -->
-            <div id="createRoomDiv">
-                <p>Create a new room</p>
-                <form action="/chatpage" method="post">
-                    <label for="newRoomName">Name</label>
-                    <input type="text" name="newRoomName">
-                    <input type="submit" value="Create new room">
-                </form>
+                <div id="createRoomDiv">
+                    <p>Create a new room</p>
+                    <form action="/chatpage" method="post">
+                        <label for="newRoomName"></label>
+                        <input type="text" name="newRoomName" placeholder="Name">
+                        <input class="btn btn-primary" type="submit" value="Create new room">
+                    </form>
+                </div>
             </div>
-
         </div>
         <div id="test" class="col-sm-9 no-gutters">
             <div id="welcomeText">
@@ -67,7 +74,7 @@
                         <button type="submit" id="logOutBtn" class="btn btn-primary"> Profile </button>
                     </form>
                 </div>
-                <div id="logOut">
+                <div >
                     <form action="/login/:logout">
                         <button type="submit" id="logOutBtn" class="btn btn-danger"> Logout</button>
                     </form>
