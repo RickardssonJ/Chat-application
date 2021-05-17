@@ -15,35 +15,35 @@
   <div class="row no-gutters">
     <div class="col-sm-3 no-gutters">
       <div class="sidePanelProfil">
-      <div id="sideBarProfilPic">
-        <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
-      </div>
-      <div id="sideBar">
-        <div id="roomDiv">
-        <% rooms.forEach(room=> { %>
-          <h2><a href="/rooms/<%= room._id %>">
-              <%= room.roomName %>
-          </h2></a>
-          <% }) %>
+        <div id="sideBarProfilPic">
+          <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
         </div>
-        <!-- CREATE A NEW ROOM -->
+        <div id="sideBar">
+          <div id="roomDiv">
+            <% rooms.forEach(room=> { %>
+              <h2><a href="/rooms/<%= room._id %>">
+                  <%= room.roomName %>
+              </h2></a>
+              <% }) %>
+          </div>
+          <!-- CREATE A NEW ROOM -->
+        </div>
+        <div id="createRoomDiv">
+          <p>Create a new room</p>
+          <form action="/chatpage" method="post">
+            <label for="newRoomName"></label>
+            <input type="text" name="newRoomName" placeholder="Name">
+            <input class="btn btn-primary" type="submit" value="Create new room">
+          </form>
+        </div>
       </div>
-      <div id="createRoomDiv">
-        <p>Create a new room</p>
-        <form action="/chatpage" method="post">
-          <label for="newRoomName"></label>
-          <input type="text" name="newRoomName" placeholder="Name">
-          <input class="btn btn-primary" type="submit" value="Create new room">
-        </form>
-      </div>
-    </div>
     </div>
     <div class="col-sm-9 no-gutters">
       <div id="welcomeText">
         <h2>Welcome <%= logedInUser %> please select a room to start chatting or update your profile here.</h2>
       </div>
       <div id="chat-window">
-     
+
         <div id="profilPagePic">
           <img id="profilPic" src="<%= userDoc.profilPic %>" alt="profil picture">
         </div>
